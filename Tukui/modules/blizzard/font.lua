@@ -18,16 +18,6 @@ TukuiFonts:SetScript("OnEvent", function(self, event, addon)
 	local NUMBER     = C.media.font
 
 	if T.eyefinity then
-		-- damage are huge on eyefinity, so we disable it
-		InterfaceOptionsCombatTextPanelTargetDamage:Hide()
-		InterfaceOptionsCombatTextPanelPeriodicDamage:Hide()
-		InterfaceOptionsCombatTextPanelPetDamage:Hide()
-		InterfaceOptionsCombatTextPanelHealing:Hide()
-		SetCVar("CombatLogPeriodicSpells",0)
-		SetCVar("PetMeleeDamage",0)
-		SetCVar("CombatDamage",0)
-		SetCVar("CombatHealing",0)
-		
 		-- set an invisible font for xp, honor kill, etc
 		local INVISIBLE = [=[Interface\Addons\Tukui\medias\fonts\invisible_font.ttf]=]
 		COMBAT = INVISIBLE

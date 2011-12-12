@@ -2,22 +2,22 @@ local T, C, L = unpack(select(2, ...))
 
 C["media"] = {
 	-- fonts (ENGLISH, SPANISH)
-	["font"] = [=[Interface\Addons\Tukui\medias\fonts\normal_font.ttf]=], -- general font of tukui
-	["uffont"] = [[Interface\AddOns\Tukui\medias\fonts\uf_font.ttf]], -- general font of unitframes
-	["dmgfont"] = [[Interface\AddOns\Tukui\medias\fonts\combat_font.ttf]], -- general font of dmg / sct
+	["font"] = [=[Interface\Addons\Tukui\medias\fonts\FRIZQT__.ttf]=], -- general font of tukui
+	["uffont"] = [[Interface\Addons\Tukui\medias\fonts\FRIZQT__.ttf]], -- general font of unitframes
+	["dmgfont"] = [[Interface\Addons\Tukui\medias\fonts\FRIZQT__.ttf]], -- general font of dmg / sct
 	
 	-- fonts (DEUTSCH)
-	["de_font"] = [=[Interface\Addons\Tukui\medias\fonts\normal_font.ttf]=], -- general font of tukui
-	["de_uffont"] = [[Interface\AddOns\Tukui\medias\fonts\uf_font.ttf]], -- general font of unitframes
-	["de_dmgfont"] = [[Interface\AddOns\Tukui\medias\fonts\combat_font.ttf]], -- general font of dmg / sct
+	["de_font"] = [=[Interface\Addons\Tukui\medias\fonts\FRIZQT__.ttf]=], -- general font of tukui
+	["de_uffont"] = [[Interface\Addons\Tukui\medias\fonts\FRIZQT__.ttf]], -- general font of unitframes
+	["de_dmgfont"] = [[Interface\Addons\Tukui\medias\fonts\FRIZQT__.ttf]], -- general font of dmg / sct
 	
 	-- fonts (FRENCH)
-	["fr_font"] = [=[Interface\Addons\Tukui\medias\fonts\normal_font.ttf]=], -- general font of tukui
-	["fr_uffont"] = [[Interface\AddOns\Tukui\medias\fonts\uf_font.ttf]], -- general font of unitframes
-	["fr_dmgfont"] = [=[Interface\AddOns\Tukui\medias\fonts\combat_font.ttf]=], -- general font of dmg / sct
+	["fr_font"] = [=[Interface\Addons\Tukui\medias\fonts\FRIZQT__.ttf]=], -- general font of tukui
+	["fr_uffont"] = [[Interface\Addons\Tukui\medias\fonts\FRIZQT__.ttf]], -- general font of unitframes
+	["fr_dmgfont"] = [=[Interface\Addons\Tukui\medias\fonts\FRIZQT__.ttf]=], -- general font of dmg / sct
 	
 	-- fonts (RUSSIAN)
-	["ru_font"] = [=[Interface\Addons\Tukui\medias\fonts\normal_font.ttf]=], -- general font of tukui
+	["ru_font"] = [=[Interface\Addons\Tukui\medias\fonts\FRIZQT__.ttf]=], -- general font of tukui
 	["ru_uffont"] = [[Fonts\ARIALN.TTF]], -- general font of unitframes
 	["ru_dmgfont"] = [[Interface\AddOns\Tukui\medias\fonts\combat_font_rus.ttf]], -- general font of dmg / sct
 	

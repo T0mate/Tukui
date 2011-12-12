@@ -568,12 +568,7 @@ end
 
 local LoadBlizzardSkin = CreateFrame("Frame")
 LoadBlizzardSkin:RegisterEvent("ADDON_LOADED")
-LoadBlizzardSkin:SetScript("OnEvent", function(self, event, addon)
-	if IsAddOnLoaded("Skinner") or IsAddOnLoaded("Aurora") or not C.general.blizzardreskin then
-		self:UnregisterEvent("ADDON_LOADED")
-		return 
-	end
-	
+LoadBlizzardSkin:SetScript("OnEvent", function(self, event, addon)	
 	for _addon, skinfunc in pairs(T.SkinFuncs) do
 		if type(skinfunc) == "function" then
 			if _addon == addon then

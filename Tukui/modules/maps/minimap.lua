@@ -100,15 +100,11 @@ local function UpdateLFG()
 	MiniMapLFGFrame:Point("BOTTOMRIGHT", Minimap, "BOTTOMRIGHT", 2, 1)
 	MiniMapLFGFrameBorder:Hide()
 end
-if T.toc < 40300 then
-	hooksecurefunc("MiniMapLFG_UpdateIsShown", UpdateLFG)
-else
-	hooksecurefunc("MiniMapLFG_Update", UpdateLFG)
-end
+
+hooksecurefunc("MiniMapLFG_Update", UpdateLFG)
 
 -- reskin LFG dropdown
-local status
-if T.toc >= 40300 then status = LFGSearchStatus else status = LFDSearchStatus end
+local status = LFGSearchStatus
 status:SetTemplate("Default")
 
 -- for t13+, if we move map we need to point status according to our Minimap position.
@@ -120,9 +116,9 @@ local function UpdateLFGTooltip()
 	elseif position:match("BOTTOM") then
 		status:SetPoint("BOTTOMLEFT", MiniMapLFGFrame, "BOTTOMRIGHT", 4, 0)
 	elseif position:match("LEFT") then		
-		status:SetPoint("TOPLEFT", MiniMapLFGFrame, "TOPRIGHT", 4, 0)
+		status:SetPoint("TOPRIGHT", MiniMapLFGFrame, "TOPLEFT", 0, 0)
 	else
-		status:SetPoint("TOPRIGHT", MiniMapLFGFrame, "TOPLEFT", 0, 0)	
+		status:SetPoint("TOPLEFT", MiniMapLFGFrame, "TOPRIGHT", 4, 0)	
 	end
 end
 status:HookScript("OnShow", UpdateLFGTooltip)
