@@ -115,12 +115,12 @@ local enable = true
 local origa1, origf, origa2, origx, origy
 
 T.MoveUIElements = function()
-	-- don't allow moving while in combat
-	if InCombatLockdown() then print(ERR_NOT_IN_COMBAT) return end
-	
 	for i = 1, getn(T.AllowFrameMoving) do
 		if T.AllowFrameMoving[i] then		
-			if enable then			
+			if enable then
+				-- don't allow moving while in combat
+				if InCombatLockdown() then print(ERR_NOT_IN_COMBAT) return end
+				
 				T.AllowFrameMoving[i]:EnableMouse(true)
 				T.AllowFrameMoving[i]:RegisterForDrag("LeftButton", "RightButton")
 				T.AllowFrameMoving[i]:SetScript("OnDragStart", function(self) 
