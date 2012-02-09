@@ -165,5 +165,5 @@ protection:SetScript("OnEvent", function(self, event)
 	if enable then return end
 	print(ERR_NOT_IN_COMBAT)
 	enable = false
-	moving()
+	T.MoveUIElements()
 end)
