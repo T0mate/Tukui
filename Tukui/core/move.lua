@@ -118,9 +118,6 @@ T.MoveUIElements = function()
 	for i = 1, getn(T.AllowFrameMoving) do
 		if T.AllowFrameMoving[i] then		
 			if enable then
-				-- don't allow moving while in combat
-				if InCombatLockdown() then print(ERR_NOT_IN_COMBAT) return end
-				
 				T.AllowFrameMoving[i]:EnableMouse(true)
 				T.AllowFrameMoving[i]:RegisterForDrag("LeftButton", "RightButton")
 				T.AllowFrameMoving[i]:SetScript("OnDragStart", function(self) 
@@ -151,13 +148,19 @@ T.MoveUIElements = function()
 		end
 	end
 	
-	if T.MoveUnitFrames then T.MoveUnitFrames() end
-	
 	if enable then enable = false else enable = true end
 end
 SLASH_MOVING1 = "/mtukui"
 SLASH_MOVING2 = "/moveui"
-SlashCmdList["MOVING"] = T.MoveUIElements
+SlashCmdList["MOVING"] = function()
+	if InCombatLockdown() then print(ERR_NOT_IN_COMBAT) return end
+	
+	T.MoveUIElements()
+	
+	if T.MoveUnitFrames then
+		T.MoveUnitFrames()
+	end
+end
 
 local protection = CreateFrame("Frame")
 protection:RegisterEvent("PLAYER_REGEN_DISABLED")
