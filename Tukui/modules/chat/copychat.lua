@@ -105,7 +105,7 @@ for i=1, NUM_CHAT_WINDOWS do
 	editbox:HookScript("OnTextChanged", function(self)
 		local text = self:GetText()
 		
-		local new, found = gsub(text, "|Kf(%S+)|k([_A-Za-z0-9-]+)%s([_A-Za-z0-9-]+)(%S+)", "%2 %3:")
+		local new, found = gsub(text, "|Kf(%S+)|k(%S+)%s(%S+)k:%s", "%2 %3: ")
 		
 		if found > 0 then
 			new = new:gsub('|', '')
