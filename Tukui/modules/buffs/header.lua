@@ -57,12 +57,9 @@ buffs:SetPoint("TOPRIGHT", UIParent, -184, -22)
 buffs:SetAttribute("filter", "HELPFUL")
 buffs:SetAttribute("consolidateProxy", CreateFrame("Frame", buffs:GetName() .. "ProxyButton", buffs, "TukuiAurasProxyTemplate"))
 buffs:SetAttribute("consolidateHeader", consolidate)
+buffs:SetAttribute("consolidateTo", filter)
+buffs:SetAttribute("includeWeapons", 1)
 
--- blizzard introduced bugs with secure aura headers in 4.3, disabling it until fixed
-if T.toc < 40300 then
-	buffs:SetAttribute("consolidateTo", filter)
-	buffs:SetAttribute("includeWeapons", 1)
-end
 
 buffs:SetAttribute("consolidateDuration", -1)
 buffs:Show()
@@ -116,6 +113,8 @@ debuffs:Show()
 ---------------------------------------------------------
 -- WORKAROUND FIX FOR BUGGED SECURE AURA HEADER ON 4.3
 ---------------------------------------------------------
+
+if T.toc < 40300 then return end
 
 -- TODO
 	-- Do a check for weapons enchants with and without consolidate buff enabled if bug happen. (I don't have a rogue available)
