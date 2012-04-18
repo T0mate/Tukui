@@ -115,10 +115,10 @@ local function UpdateLFGTooltip()
 		status:SetPoint("BOTTOMRIGHT", MiniMapLFGFrame, "BOTTOMLEFT", 0, 0)
 	elseif position:match("BOTTOM") then
 		status:SetPoint("BOTTOMLEFT", MiniMapLFGFrame, "BOTTOMRIGHT", 4, 0)
-	elseif position:match("LEFT") then		
+	elseif position:match("LEFT") then
 		status:SetPoint("TOPRIGHT", MiniMapLFGFrame, "TOPLEFT", 0, 0)
 	else
-		status:SetPoint("TOPLEFT", MiniMapLFGFrame, "TOPRIGHT", 4, 0)	
+		status:SetPoint("TOPLEFT", MiniMapLFGFrame, "TOPRIGHT", 4, 0)
 	end
 end
 status:HookScript("OnShow", UpdateLFGTooltip)
