@@ -570,6 +570,7 @@ local function Shared(self, unit)
 						
 						bars[i].bg:SetTexture(normTex)					
 						bars[i].bg:SetAlpha(.15)
+						bars[i].width = bars[i]:GetWidth()
 					end
 					
 					bars.Override = T.UpdateHoly

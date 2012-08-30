@@ -183,7 +183,7 @@ Stat:SetScript("OnEnter", function(self)
 	local oneraid, lockoutColor
 	for i = 1, GetNumSavedInstances() do
 		local name, _, reset, difficulty, locked, extended, _, isRaid, maxPlayers, _, numEncounters, encounterProgress  = GetSavedInstanceInfo(i)
-		if isRaid and (locked or extended) then
+		if isRaid and (locked or extended) and name then
 			local tr,tg,tb,diff
 			if not oneraid then
 				GameTooltip:AddLine(" ")
@@ -191,7 +191,10 @@ Stat:SetScript("OnEnter", function(self)
 				oneraid = true
 			end
 			if extended then lockoutColor = lockoutColorExtended else lockoutColor = lockoutColorNormal end
-			GameTooltip:AddDoubleLine(format(lockoutInfoFormat, name, maxPlayers, difficultyInfo[difficulty],encounterProgress,numEncounters), formatResetTime(reset), 1,1,1, lockoutColor.r,lockoutColor.g,lockoutColor.b)
+			local formatTime = formatResetTime(reset)
+			if difficultyInfo[difficulty] and encounterProgress and numEncounters and formatTime and lockoutColor then
+				GameTooltip:AddDoubleLine(format(lockoutInfoFormat, maxPlayers, difficultyInfo[difficulty], name, encounterProgress, numEncounters), formatTime, 1,1,1, lockoutColor.r,lockoutColor.g,lockoutColor.b)
+			end
 		end
 	end
 	GameTooltip:Show()
