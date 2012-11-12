@@ -15,13 +15,10 @@ local sq, ss, sn, st
 
 local OnEnter = function(self)
 	local slot = self:GetID()
-	--if(LootSlotIsItem(slot)) then
-		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-		GameTooltip:SetLootItem(slot)
-		CursorUpdate(self)
-	--end
+	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+	GameTooltip:SetLootItem(slot)
+	CursorUpdate(self)
 	
-	LootFrame.selectedSlot = self:GetID()
 	self.drop:Show()
 	self.drop:SetVertexColor(1, 1, 0)
 end
@@ -41,6 +38,8 @@ local OnLeave = function(self)
 end
 
 local OnClick = function(self)
+	if not self:GetID() then return end
+	
 	if(IsModifiedClick()) then
 		HandleModifiedItemClick(GetLootSlotLink(self:GetID()))
 	else
@@ -48,7 +47,8 @@ local OnClick = function(self)
 		sq = self.quality
 		sn = self.name:GetText()
 		st = self.icon:GetTexture()
-
+		
+		-- master looter
 		LootFrame.selectedLootButton = self:GetName()
 		LootFrame.selectedSlot = ss
 		LootFrame.selectedQuality = sq
@@ -160,7 +160,6 @@ addon:SetMovable(true)
 addon:RegisterForClicks"anyup"
 
 addon:SetParent(UIParent)
---addon:SetUserPlaced(true)
 addon:Point("TOPLEFT", 0, -104)
 addon:SetTemplate("Default")
 addon:Width(256)
@@ -289,11 +288,11 @@ addon.LOOT_CLOSED = function(self)
 end
 
 addon.OPEN_MASTER_LOOT_LIST = function(self)
-	ToggleDropDownMenu(nil, nil, GroupLootDropDown, addon.slots[ss], 0, 0)
+	ToggleDropDownMenu(nil, nil, TukuiMasterLootDropDown, addon.slots[ss], 0, 0)
 end
 
 addon.UPDATE_MASTER_LOOT_LIST = function(self)
-	MasterLooterFrame_UpdatePlayers()
+	UIDropDownMenu_Refresh(GroupLootDropDown)
 end
 
 addon.ADDON_LOADED = function(self, event, addon)
@@ -321,4 +320,3 @@ addon:Hide()
 -- Fuzz
 LootFrame:UnregisterAllEvents()
 table.insert(UISpecialFrames, "TukuiLootFrame")
-
