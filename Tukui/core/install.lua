@@ -39,7 +39,9 @@ T.ChatSetup = function()
 		if i == 1 then FCF_SetWindowName(frame, "G, S & W") end
 		if i == 2 then FCF_SetWindowName(frame, "Log") end
 		
-		T.SetDefaultChatPosition(frame)
+		if T.SetDefaultChatPosition then
+			T.SetDefaultChatPosition(frame)
+		end
 	end
 	
 	ChatFrame_RemoveAllMessageGroups(ChatFrame1)
@@ -117,6 +119,8 @@ T.ChatSetup = function()
 	ToggleChatColorNamesByClassGroup(true, "CHANNEL3")
 	ToggleChatColorNamesByClassGroup(true, "CHANNEL4")
 	ToggleChatColorNamesByClassGroup(true, "CHANNEL5")
+	ToggleChatColorNamesByClassGroup(true, "INSTANCE_CHAT")
+	ToggleChatColorNamesByClassGroup(true, "INSTANCE_CHAT_LEADER")
 end
 
 local function cvarsetup()
