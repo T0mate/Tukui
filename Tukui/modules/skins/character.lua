@@ -212,11 +212,9 @@ local function LoadSkin()
 
 	--Reputation
 	local function UpdateFactionSkins()
-		ReputationListScrollFrame:StripTextures()
-		ReputationFrame:StripTextures(true)
 		for i=1, GetNumFactions() do
 			local statusbar = _G["ReputationBar"..i.."ReputationBar"]
-
+			
 			if statusbar then
 				statusbar:SetStatusBarTexture(C["media"].normTex)
 				
@@ -234,14 +232,19 @@ local function LoadSkin()
 				
 			end		
 		end
+		ReputationListScrollFrame:StripTextures()
+		ReputationFrame:StripTextures(true)
 		ReputationDetailFrame:StripTextures()
 		ReputationDetailFrame:SetTemplate("Default")
 		ReputationDetailFrame:Point("TOPLEFT", ReputationFrame, "TOPRIGHT", 4, -28)
 	end	
 	ReputationFrame:HookScript("OnShow", UpdateFactionSkins)
 	hooksecurefunc("ReputationFrame_OnEvent", UpdateFactionSkins)
+	ReputationDetailInactiveCheckBox:HookScript("OnClick", UpdateFactionSkins)
 	ReputationDetailCloseButton:SkinCloseButton()
 	ReputationDetailAtWarCheckBox:SkinCheckBox()
+	ReputationDetailAtWarCheckBox:SetCheckedTexture("Interface\\Buttons\\UI-CheckBox-SwordCheck")
+	ReputationDetailLFGBonusReputationCheckBox:SkinCheckBox()
 	ReputationDetailInactiveCheckBox:SkinCheckBox()
 	ReputationDetailMainScreenCheckBox:SkinCheckBox()
 	
@@ -263,6 +266,8 @@ local function LoadSkin()
 			else
 				button.t:SetText("X")
 			end
+			
+			UpdateFactionSkins()
 		end
 	end
 	hooksecurefunc("ReputationFrame_Update", UpdateReputationExpand)
