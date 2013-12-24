@@ -42,6 +42,8 @@ local function BuildGuildTable()
 	for i = 1, GetNumGuildMembers() do
 		name, rank, _, level, _, zone, note, officernote, connected, status, class, _, _, isMobile = GetGuildRosterInfo(i)
 		
+		name = string.gsub(name, "-.*", "")
+		
 		if status == 1 then
 			status = "|cffff0000["..AFK.."]|r"
 		elseif status == 2 then
@@ -83,12 +85,9 @@ local function Update(self, event, ...)
 	end
 	
 	if IsInGuild() then
-		totalOnline = 0
-		local name, rank, level, zone, note, officernote, connected, status, class
-		for i = 1, GetNumGuildMembers() do
-			local connected = select(9, GetGuildRosterInfo(i))
-			if connected then totalOnline = totalOnline + 1 end
-		end	
+		GuildRoster() -- Bux Fix on 5.4.
+		totalOnline = select(3, GetNumGuildMembers())
+		
 		Text:SetFormattedText(displayString, L.datatext_guild, totalOnline)
 	else
 		Text:SetText(L.datatext_noguild)
