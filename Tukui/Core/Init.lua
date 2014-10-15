@@ -27,10 +27,9 @@ SLASH_RELOADUI1 = "/rl"
 SlashCmdList.RELOADUI = ReloadUI
 
 Tukui = Engine
-
-if (Engine[1].ScreenWidth > 3840) or (UIParent:GetWidth() + 1 > Engine[1].ScreenWidth) then
-	local width = Engine[1].ScreenWidth
-	local height = Engine[1].ScreenHeight
+if (Tukui[1].ScreenWidth > 3840) or (UIParent:GetWidth() + 1 > Tukui[1].ScreenWidth) then
+	local width = Tukui[1].ScreenWidth
+	local height = Tukui[1].ScreenHeight
 	
 	-- because some user enable bezel compensation, we need to find the real width of a single monitor.
 	-- I don't know how it really work, but i'm assuming they add pixel to width to compensate the bezel. :P
@@ -50,16 +49,7 @@ if (Engine[1].ScreenWidth > 3840) or (UIParent:GetWidth() + 1 > Engine[1].Screen
 	if width >= 3840 and width < 4080 then width = 1224 end 	                -- SXGA & SXGA (UVGA) & WXGA & HDTV
 	
 	-- register a constant, we will need it later for launch.lua
-	Engine[1].eyefinity = width
-end
-
---------------------------------------------------------
--- Auto Scale UI (Overwrite Settings and Blizzard)
---------------------------------------------------------
-
--- autoscale
-if C["general"].autoscale == true then
-	C["general"].uiscale = min(2, max(.64, 768/string.match(Engine[1].Resolution, "%d+x(%d+)")))
+	Tukui[1].eyefinity = width
 end
 	
 --------------------------------------------------------
@@ -70,9 +60,9 @@ end
 local function NeedReloadUI()
 	local resolution = Graphics_ResolutionDropDown
 	local x, y = resolution:getValues()
-	local oldratio = Engine[1].ScreenWidth / Engine[1].ScreenHeight
+	local oldratio = Tukui[1].ScreenWidth / Tukui[1].ScreenHeight
 	local newratio = x / y
-	local oldreso = Engine[1].Resolution
+	local oldreso = Tukui[1].Resolution
 	local newreso = x.."x"..y
 	
 	if (oldratio == newratio) and (oldreso ~= newreso) then
@@ -84,19 +74,9 @@ local Graphic = CreateFrame("Frame")
 Graphic:RegisterEvent("PLAYER_ENTERING_WORLD")
 Graphic:SetScript("OnEvent", function(self, event)
 	-- we adjust UIParent to screen #1 if Eyefinity is found
-	if Engine[1].eyefinity then
-		local width = Engine[1].eyefinity
-		local height = Engine[1].ScreenHeight
-		
-		-- if autoscale is off, find a new width value of UIParent for screen #1.
-		if not C.general.autoscale or height > 1200 then
-			local h = UIParent:GetHeight()
-			local ratio = Engine[1].ScreenHeight / h
-			local w = Engine[1].eyefinity / ratio
-			
-			width = w
-			height = h			
-		end
+	if Tukui[1].eyefinity then
+		local width = Tukui[1].eyefinity
+		local height = Tukui[1].ScreenHeight
 		
 		UIParent:SetSize(width, height)
 		UIParent:ClearAllPoints()
