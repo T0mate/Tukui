@@ -7,6 +7,7 @@ C["Medias"] = {
 	["DamageFont"] = [[Interface\AddOns\Tukui\Medias\Fonts\combat_font.ttf]],
 	["PixelFont"] = [=[Interface\Addons\Tukui\Medias\Fonts\pixel_font.ttf]=],
 	["ActionBarFont"] = [=[Interface\Addons\Tukui\Medias\Fonts\actionbar_font.ttf]=],
+	["FRIZQT"] = [=[Interface\Addons\Tukui\Medias\Fonts\FRIZQT__.ttf]=],
 	
 	-- Textures
 	["Normal"] = [[Interface\AddOns\Tukui\Medias\Textures\normTex]],

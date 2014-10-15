@@ -25,7 +25,7 @@ C["ActionBars"] = {
 	["OwnMetamorphosisBar"] = true,
 	["OwnWarriorStanceBar"] = false,
 	["HideBackdrop"] = false,
-	["Font"] = "Tukui Outline",
+	["Font"] = "FRIZQT",
 }
 
 C["Auras"] = {
@@ -37,7 +37,7 @@ C["Auras"] = {
 	["HideDebuffs"] = false,
 	["Animation"] = false,
 	["BuffsPerRow"] = 12,
-	["Font"] = "Tukui Outline",
+	["Font"] = "FRIZQT",
 }
 
 C["Bags"] = {
@@ -45,9 +45,9 @@ C["Bags"] = {
 	["ButtonSize"] = 28,
 	["Spacing"] = 4,
 	["ItemsPerRow"] = 11,
-	["PulseNewItem"] = false,
-	["Font"] = "Tukui Outline",
-	["BagFilter"] = false,
+	["PulseNewItem"] = true,
+	["Font"] = "FRIZQT",
+	["BagFilter"] = true,
 }
 
 C["Chat"] = {
@@ -58,28 +58,28 @@ C["Chat"] = {
 	["LootFrame"] = true,
 	["Background"] = false,
 	["ScrollByX"] = 3,
-	["TabFont"] = "Tukui",
-	["ChatFont"] = "Tukui",
+	["TabFont"] = "FRIZQT",
+	["ChatFont"] = "FRIZQT",
 }
 
 C["Cooldowns"] = {
-	["Font"] = "Tukui Outline",
+	["Font"] = "FRIZQT",
 }
 
 C["DataTexts"] = {
-	["Battleground"] = true,
+	["Battleground"] = false,
 	["LocalTime"] = true,
-	["Time24HrFormat"] = false,
+	["Time24HrFormat"] = true,
 	["NameColor"] = {1, 1, 1},
 	["ValueColor"] = {1, 1, 1},
-	["Font"] = "Tukui",
+	["Font"] = "FRIZQT",
 }
 
 C["Merchant"] = {
 	["AutoSellGrays"] = true,
 	["SellMisc"] = true,
 	["AutoRepair"] = true,
-	["UseGuildRepair"] = false,
+	["UseGuildRepair"] = true,
 }
 
 C["Misc"] = {
@@ -98,17 +98,17 @@ C["NamePlates"] = {
 	["Spacing"] = 4,
 	["NonTargetAlpha"] = .5,
 	["Texture"] = "Tukui",
-	["Font"] = "Tukui Outline",
+	["Font"] = "FRIZQT",
 }
 
 C["Party"] = {
 	["Enable"] = true,
 	["Portrait"] = true,
 	["HealBar"] = true,
-	["ShowPlayer"] = false,
+	["ShowPlayer"] = true,
 	["ShowHealthText"] = true,
-	["Font"] = "Tukui UF",
-	["HealthFont"] = "Tukui UF Outline",
+	["Font"] = "FRIZQT",
+	["HealthFont"] = "FRIZQT",
 	["PowerTexture"] = "Tukui",
 	["HealthTexture"] = "Tukui",
 }
@@ -122,8 +122,8 @@ C["Raid"] = {
 	["RangeAlpha"] = 0.3,
 	["ShowRessurection"] = true,
 	["ShowHealthText"] = true,
-	["Font"] = "Tukui UF",
-	["HealthFont"] = "Tukui UF Outline",
+	["Font"] = "FRIZQT",
+	["HealthFont"] = "FRIZQT",
 	["PowerTexture"] = "Tukui",
 	["HealthTexture"] = "Tukui",
 	["GroupBy"] = {
@@ -142,13 +142,13 @@ C["Tooltips"] = {
 	["HideOnUnitFrames"] = false,
 	["UnitHealthText"] = true,
 	["ShowSpec"] = true,
-	["HealthFont"] = "Tukui",
-	["HealthTexture"] = "Tukui",
+	["HealthFont"] = "FRIZQT",
+	["HealthTexture"] = "FRIZQT",
 }
 
 C["UnitFrames"] = {
 	["Enable"] = true,
-	["Portrait"] = false,
+	["Portrait"] = true,
 	["CastBar"] = true,
 	["UnlinkCastBar"] = false,
 	["CastBarIcon"] = true,
@@ -162,7 +162,7 @@ C["UnitFrames"] = {
 	["SerendipityBar"] = true,
 	["OnlySelfDebuffs"] = false,
 	["DarkTheme"] = false,
-	["Font"] = "Tukui UF Outline",
+	["Font"] = "FRIZQT",
 	["PowerTexture"] = "Tukui",
 	["HealthTexture"] = "Tukui",
 }
