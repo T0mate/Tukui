@@ -82,10 +82,6 @@ Graphic:SetScript("OnEvent", function(self, event)
 		UIParent:ClearAllPoints()
 		UIParent:SetPoint("CENTER")		
 	end
-
-	-- require a reload when graphics option changes, even if Standard Blizzard UI doesn't really need it.
-	VideoOptionsFrameOkay:HookScript("OnClick", NeedReloadUI)
-	VideoOptionsFrameApply:HookScript("OnClick", NeedReloadUI)
 	
 	-- unload
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
