@@ -189,7 +189,8 @@ function TukuiChat:SkinToastFrame()
 	Toast:CreateShadow()
 	ToastCloseButton:SkinCloseButton()
 	Toast:ClearAllPoints()
-	Toast:SetFrameStrata("HIGH")
+	Toast:SetFrameStrata("Medium")
+	Toast:SetFrameLevel(20)
 	
 	if C.Chat.Background then
 		local Backdrop = T["Panels"].LeftChatBG
@@ -246,6 +247,10 @@ function TukuiChat:SaveChatFramePositionAndDimensions()
 	local Anchor1, _, Anchor2, X, Y = self:GetPoint()
 	local Width, Height = self:GetSize()
 	local ID = self:GetID()
+	
+	if not (TukuiDataPerChar.Chat) then
+		TukuiDataPerChar.Chat = {}
+	end
 	
 	TukuiDataPerChar.Chat["Frame" .. ID] = {Anchor1, Anchor2, X, Y, Width, Height}
 end

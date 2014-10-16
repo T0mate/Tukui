@@ -764,7 +764,7 @@ function TukuiUnitFrames:GetRaidFramesAttributes()
 		"groupingOrder", "1,2,3,4,5,6,7,8",
 		"groupBy", C["Raid"].GroupBy.Value,
 		"maxColumns", math.ceil(40/5),
-		"unitsPerColumn", 10,
+		"unitsPerColumn", C["Raid"].MaxUnitPerColumn,
 		"columnSpacing", T.Scale(4),
 		"columnAnchorPoint", "LEFT"
 end
@@ -777,11 +777,11 @@ function TukuiUnitFrames:GetPetRaidFramesAttributes()
 		"SecureGroupPetHeaderTemplate", 
 		Properties,
 		"showParty", false,
-		"showRaid", true,
+		"showRaid", C["Raid"].ShowPets,
 		"showSolo", false,
 		"maxColumns", math.ceil(40/5),
 		"point", "TOP",
-		"unitsPerColumn", 10,
+		"unitsPerColumn", C["Raid"].MaxUnitPerColumn,
 		"columnSpacing", T.Scale(4),
 		"columnAnchorPoint", "LEFT",
 		"yOffset", T.Scale(-4),
@@ -877,24 +877,26 @@ function TukuiUnitFrames:CreateUnits()
 	self.Units.Focus = Focus
 	self.Units.FocusTarget = FocusTarget
 	
-	local Arena = {}
+	if (C.UnitFrames.Arena) then
+		local Arena = {}
 	
-	for i = 1, 5 do
-		Arena[i] = oUF:Spawn("arena"..i, nil)
-		Arena[i]:SetParent(Panels.PetBattleHider)
-		if (i == 1) then
-			Arena[i]:SetPoint("BOTTOMRIGHT", TukuiUnitFrames.Anchor, "TOPRIGHT", 0, 300)
-		else
-			Arena[i]:SetPoint("BOTTOM", Arena[i-1], "TOP", 0, 35)
-		end
-		Arena[i]:Size(200, 29)
+		for i = 1, 5 do
+			Arena[i] = oUF:Spawn("arena"..i, nil)
+			Arena[i]:SetParent(Panels.PetBattleHider)
+			if (i == 1) then
+				Arena[i]:SetPoint("BOTTOMRIGHT", TukuiUnitFrames.Anchor, "TOPRIGHT", 0, 300)
+			else
+				Arena[i]:SetPoint("BOTTOM", Arena[i-1], "TOP", 0, 35)
+			end
+			Arena[i]:Size(200, 29)
 		
-		Movers:RegisterFrame(Arena[i])
+			Movers:RegisterFrame(Arena[i])
+		end
+	
+		self.Units.Arena = Arena
+	
+		self:CreateArenaPreparationFrames()
 	end
-	
-	self.Units.Arena = Arena
-	
-	self:CreateArenaPreparationFrames()
 	
 	local Boss = {}
 	
@@ -929,16 +931,18 @@ function TukuiUnitFrames:CreateUnits()
 		local Raid = oUF:SpawnHeader(TukuiUnitFrames:GetRaidFramesAttributes())
 		Raid:SetParent(Panels.PetBattleHider)
 		Raid:Point("TOPLEFT", UIParent, "TOPLEFT", 30, -30)
-
-		local Pet = oUF:SpawnHeader(TukuiUnitFrames:GetPetRaidFramesAttributes())
-		Pet:SetParent(Panels.PetBattleHider)
-		Pet:Point("TOPLEFT", Raid, "TOPRIGHT", 4, 0)
+		
+		if C.Raid.ShowPets then
+			local Pet = oUF:SpawnHeader(TukuiUnitFrames:GetPetRaidFramesAttributes())
+			Pet:SetParent(Panels.PetBattleHider)
+			Pet:Point("TOPLEFT", Raid, "TOPRIGHT", 4, 0)
+			
+			TukuiUnitFrames.Headers.RaidPet = Pet
+			Movers:RegisterFrame(Pet)
+		end
 		
 		TukuiUnitFrames.Headers.Raid = Raid
-		TukuiUnitFrames.Headers.RaidPet = Pet
-		
 		Movers:RegisterFrame(Raid)
-		Movers:RegisterFrame(Pet)
 	end
 	
 	Movers:RegisterFrame(Player)
@@ -1016,10 +1020,12 @@ function TukuiUnitFrames:Enable()
 	self:CreateUnits()
 	
 	-- Arena Preparation
-	self:RegisterEvent("PLAYER_ENTERING_WORLD")
-	self:RegisterEvent("ARENA_PREP_OPPONENT_SPECIALIZATIONS")
-	self:RegisterEvent("ARENA_OPPONENT_UPDATE")	
-	self:SetScript("OnEvent", self.OnEvent)
+	if (C.UnitFrames.Arena) then
+		self:RegisterEvent("PLAYER_ENTERING_WORLD")
+		self:RegisterEvent("ARENA_PREP_OPPONENT_SPECIALIZATIONS")
+		self:RegisterEvent("ARENA_OPPONENT_UPDATE")	
+		self:SetScript("OnEvent", self.OnEvent)
+	end
 end
 
 T["UnitFrames"] = TukuiUnitFrames

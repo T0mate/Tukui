@@ -200,9 +200,6 @@ function Bags:CreateReagentContainer()
 			Button:SetPoint("BOTTOMLEFT", LastButton, "BOTTOMLEFT", (ButtonSpacing + ButtonSize), 0)
 			NumButtons = NumButtons + 1
 		end
-			
-		Count.Show = Noop
-		Count:Hide()
 
 		Icon:SetTexCoord(unpack(T.IconCoord))
 		Icon:SetInside()
@@ -706,6 +703,8 @@ function Bags:UpdateAllBankBags()
 			end
 			
 			Bags.SkinBagButton(Button)
+			Bags.SlotUpdate(self, Bag - 1, Button)
+			
 			LastButton = Button
 		end
 	end

@@ -58,6 +58,11 @@ TukuiConfig["ruRU"] = {
 			["Name"] = "Панель стоек/тотемы",
 			["Desc"] = "Использовать панель стоек/тотемов в стиле Tukui",
 		},
+
+		["SwitchBarOnStance"] = {
+			["Name"] = "Swap main bar on new stance",
+			["Desc"] = "Enable main action bar swap when you change stance.",
+		},
 		
 		["Pet"] = {
 			["Name"] = "Панель питомца",
@@ -420,6 +425,16 @@ TukuiConfig["ruRU"] = {
 			["Desc"] = "Использовать рамки рейда Tukui",
 		},
 		
+		["ShowPets"] = {
+			["Name"] = "Show Pets",
+			["Desc"] = "Derp",
+		},
+		
+		["MaxUnitPerColumn"] = {
+			["Name"] = "Raid members per column",
+			["Desc"] = "Change the max number of raid members per column",
+		},
+		
 		["HealBar"] = {
 			["Name"] = "Входящее исцеление",
 			["Desc"] = "Отображать входящее исцеления и поглощения в виде полосы",
@@ -587,6 +602,11 @@ TukuiConfig["ruRU"] = {
 		["DarkTheme"] = {
 			["Name"] = "Тёмное оформление",
 			["Desc"] = "Если включено, рамки юнитов окрасятся в тёмный цвет, а полоса ресурса в цвет класса",
+		},
+		
+		["Arena"] = {
+			["Name"] = "Arena Frames",
+			["Desc"] = "Display arena opponents when inside a battleground or arena",
 		},
 		
 		["Font"] = {

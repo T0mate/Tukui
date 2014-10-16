@@ -146,6 +146,17 @@ function Install:Launch()
 	self.Description:Point("CENTER", self, "CENTER")
 	self.Description:SetTemplate()
 	self.Description:CreateShadow()
+	self.Description:RegisterEvent("PLAYER_REGEN_DISABLED")
+	self.Description:RegisterEvent("PLAYER_REGEN_ENABLED")
+	self.Description:SetScript("OnEvent", function(self, event)
+		if (event == "PLAYER_REGEN_DISABLED") then
+			Install:Hide()
+		else
+			if (not TukuiDataPerChar.InstallDone) then
+				Install:Show()
+			end
+		end
+	end)
 
 	self.StatusBar = CreateFrame("StatusBar", nil, self)
 	self.StatusBar:SetStatusBarTexture(C.Medias.Normal)
@@ -222,23 +233,84 @@ function Install:Launch()
 	self:SetAllPoints(UIParent)
 end
 
+Install:RegisterEvent("PLAYER_LOGOUT")
 Install:RegisterEvent("ADDON_LOADED")
 Install:SetScript("OnEvent", function(self, event, addon)
-	if (addon ~= "Tukui") then
-		return
+	local IsMac = IsMacClient()
+	local Name = UnitName("Player")
+	
+	if (event == "PLAYER_LOGOUT" and IsMac) then
+		local Data = TukuiData.Settings
+		local ConfigData = TukuiConfigShared.Settings
+		
+		if (Data) then
+			Data[Name] = TukuiDataPerChar
+		end	
+		
+		if (ConfigData) then
+			 ConfigData[Name] = TukuiConfigNotShared
+		end		
+	else
+		if (addon ~= "Tukui") then
+			return
+		end
+
+		if (IsMac) and (not TukuiDataPerChar) then
+			-- Work Around for OSX and saved variables per char. (6.0.2 Blizzard Bug)
+			if (not TukuiData) then
+				TukuiData = {}
+			end
+			
+			local Data = TukuiData
+			
+			if (not Data.Settings) then
+				Data.Settings = {}
+			end
+			
+			if Data and Data.Settings[Name] then
+				TukuiDataPerChar = Data.Settings[Name]
+			end
+			
+			-- This is needed on live, I don't know why, not needed on Beta.
+			hooksecurefunc("ReloadUI", function()
+				TukuiData.Settings[Name] = TukuiDataPerChar
+			end)
+		end
+
+		if (not TukuiDataPerChar) then
+			TukuiDataPerChar = {}
+		end
+		
+		if (IsMac) and (not TukuiConfigNotShared) then
+			-- Work Around for OSX and saved variables per char. (6.0.2 Blizzard Bug)
+			if (not TukuiConfigShared) then
+				TukuiConfigShared = {}
+			end
+			
+			local ConfigData = TukuiConfigShared
+
+			if (not ConfigData.Settings) then
+				ConfigData.Settings = {}
+			end
+			
+			if ConfigData.Settings[Name] then
+				TukuiConfigNotShared = ConfigData.Settings[Name]
+			end
+			
+			-- This is needed on live, I don't know why, not needed on Beta.
+			hooksecurefunc("ReloadUI", function()
+				TukuiConfigShared.Settings[Name] = TukuiConfigNotShared
+			end)
+		end
+	
+		local IsInstalled = TukuiDataPerChar.InstallDone
+	
+		if (not IsInstalled) then
+			self:Launch()
+		end
+	
+		self:UnregisterEvent("ADDON_LOADED")
 	end
-	
-	if (not TukuiDataPerChar) then
-		TukuiDataPerChar = {}
-	end
-	
-	local IsInstalled = TukuiDataPerChar.InstallDone
-	
-	if (not IsInstalled) then
-		self:Launch()
-	end
-	
-	self:UnregisterAllEvents()
 end)
 
 T["Install"] = Install

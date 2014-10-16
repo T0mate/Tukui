@@ -55,13 +55,13 @@ TukuiConfig["koKR"] = {
 		},
 		
 		["ShapeShift"] = {
-			["Name"] = "ShapeShift",
-			["Desc"] = "Enable Tukui style ShapeShift bar",
+			["Name"] = "Stance Bar",
+			["Desc"] = "Enable Tukui style stance bar",
 		},
 		
 		["Pet"] = {
-			["Name"] = "Pet",
-			["Desc"] = "Enable Tukui style Pet bar",
+			["Name"] = "Pet Bar",
+			["Desc"] = "Enable Tukui style pet bar",
 		},
 		
 		["NormalButtonSize"] = {
@@ -418,6 +418,16 @@ TukuiConfig["koKR"] = {
 		["Enable"] = {
 			["Name"] = "Enable Raid Frames",
 			["Desc"] = "Derp",
+		},
+		
+		["ShowPets"] = {
+			["Name"] = "Show Pets",
+			["Desc"] = "Derp",
+		},
+		
+		["MaxUnitPerColumn"] = {
+			["Name"] = "Raid members per column",
+			["Desc"] = "Change the max number of raid members per column",
 		},
 		
 		["HealBar"] = {

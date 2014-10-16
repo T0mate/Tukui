@@ -54,13 +54,18 @@ TukuiConfig["itIT"] = {
 		},
 		
 		["ShapeShift"] = {
-			["Name"] = "ShapeShift",
-			["Desc"] = "Enable Tukui style ShapeShift bar",
+			["Name"] = "Stance Bar",
+			["Desc"] = "Enable Tukui style stance bar",
 		},
 		
 		["Pet"] = {
-			["Name"] = "Pet",
-			["Desc"] = "Enable Tukui style Pet bar",
+			["Name"] = "Pet Bar",
+			["Desc"] = "Enable Tukui style pet bar",
+		},
+		
+		["SwitchBarOnStance"] = {
+			["Name"] = "Swap main bar on new stance",
+			["Desc"] = "Enable main action bar swap when you change stance.",
 		},
 		
 		["NormalButtonSize"] = {
@@ -419,6 +424,16 @@ TukuiConfig["itIT"] = {
 			["Desc"] = "Derp",
 		},
 		
+		["ShowPets"] = {
+			["Name"] = "Show Pets",
+			["Desc"] = "Derp",
+		},
+		
+		["MaxUnitPerColumn"] = {
+			["Name"] = "Raid members per column",
+			["Desc"] = "Change the max number of raid members per column",
+		},
+		
 		["HealBar"] = {
 			["Name"] = "HealComm",
 			["Desc"] = "Display a bar showing incoming heals & absorbs",
@@ -586,6 +601,11 @@ TukuiConfig["itIT"] = {
 		["DarkTheme"] = {
 			["Name"] = "Dark Theme",
 			["Desc"] = "If enabled, unit frames will be a dark color with class colored power bars",
+		},
+		
+		["Arena"] = {
+			["Name"] = "Arena Frames",
+			["Desc"] = "Display arena opponents when inside a battleground or arena",
 		},
 		
 		["Font"] = {

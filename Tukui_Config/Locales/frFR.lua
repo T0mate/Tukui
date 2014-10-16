@@ -55,13 +55,18 @@ TukuiConfig["frFR"] = {
 		},
 		
 		["ShapeShift"] = {
-			["Name"] = "Postures",
-			["Desc"] = "Activer les barre des postures Tukui",
+			["Name"] = "Barre de Postures",
+			["Desc"] = "Activer les barre des postures",
 		},
 		
 		["Pet"] = {
-			["Name"] = "Familier",
-			["Desc"] = "Activer la barre de Familier Tukui",
+			["Name"] = "Barre du Familier",
+			["Desc"] = "Activer la barre de Familier",
+		},
+		
+		["SwitchBarOnStance"] = {
+			["Name"] = "Changement de barre sur posture",
+			["Desc"] = "Change la barre d'action principale lorsque l'on change de posture",
 		},
 		
 		["NormalButtonSize"] = {
@@ -420,6 +425,16 @@ TukuiConfig["frFR"] = {
 			["Desc"] = "Derp",
 		},
 		
+		["ShowPets"] = {
+			["Name"] = "Show Pets",
+			["Desc"] = "Derp",
+		},
+		
+		["MaxUnitPerColumn"] = {
+			["Name"] = "Raid members per column",
+			["Desc"] = "Change the max number of raid members per column",
+		},
+		
 		["HealBar"] = {
 			["Name"] = "HealComm",
 			["Desc"] = "Afficher une barre indiquant les soins et absorbe entrants",
@@ -587,6 +602,11 @@ TukuiConfig["frFR"] = {
 		["DarkTheme"] = {
 			["Name"] = "Theme sombre",
 			["Desc"] = "Si activé, les cadres d'unités seront d'une couleur sombre avec les barres de puissance aux couleurs des classes",
+		},
+		
+		["Arena"] = {
+			["Name"] = "Arena Frames",
+			["Desc"] = "Display arena opponents when inside a battleground or arena",
 		},
 		
 		["Font"] = {
