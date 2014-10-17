@@ -253,17 +253,19 @@ function TukuiUnitFrames:UpdateNamePosition()
 end
 
 function TukuiUnitFrames:UpdateThreat(event, unit)
-	if not unit then
+	if (not unit) or (not C.UnitFrames.Threat) then
 		return
 	end
-	
+
 	local Colors = T["Colors"]
 	local Status = UnitThreatSituation(unit)
 	local Health = self.Health
 	local Class = select(2, UnitClass(unit))
 	local Color = not UnitIsPlayer(unit) and Colors.reaction[5] or C["UnitFrames"].DarkTheme and {0.2, 0.2, 0.2} or Colors.class[Class] or {0, 0, 0}
-
-	if Status and Status > 0 then
+	
+	if (not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit)) then
+		Health:SetStatusBarColor(unpack(Colors.disconnected))
+	elseif Status and Status > 0 then
 		Health:SetStatusBarColor(1, 0, 0)
 	else
 		Health:SetStatusBarColor(Color[1], Color[2], Color[3])
@@ -576,7 +578,7 @@ function TukuiUnitFrames:CreateAuraWatchIcon(icon)
 	
 	if (icon.cd) then
 		icon.cd:SetHideCountdownNumbers(true)
-		icon.cd:SetReverse()
+		icon.cd:SetReverse(true)
 	end
 	
 	icon.overlay:SetTexture()
@@ -686,6 +688,27 @@ function TukuiUnitFrames:UpdatePriestClassBars()
 	end
 end
 
+function TukuiUnitFrames:UpdateMageClassBars()
+	local Frame = self:GetParent()
+	local Arcane = Frame.ArcaneChargeBar
+	local Totems = Frame.Totems
+	local Shadow = Frame.Shadow
+
+	if (Arcane and Arcane:IsShown()) and (Totems and Totems:IsShown()) then
+		Shadow:Point("TOPLEFT", -4, 21)
+		
+		Totems:ClearAllPoints()
+		Totems:Point("BOTTOMLEFT", Frame, "TOPLEFT", 0, 10)		
+	elseif (Arcane and Arcane:IsShown()) or (Totems and Totems:IsShown()) then
+		Shadow:Point("TOPLEFT", -4, 12)
+		
+		Totems:ClearAllPoints()
+		Totems:Point("BOTTOMLEFT", Frame, "TOPLEFT", 0, 1)
+	else
+		Shadow:Point("TOPLEFT", -4, 4)
+	end
+end
+
 function TukuiUnitFrames:UpdateDruidClassBars()
 	local Frame = self:GetParent()
 	local EclipseBar = Frame.EclipseBar
@@ -764,7 +787,7 @@ function TukuiUnitFrames:GetRaidFramesAttributes()
 		"groupingOrder", "1,2,3,4,5,6,7,8",
 		"groupBy", C["Raid"].GroupBy.Value,
 		"maxColumns", math.ceil(40/5),
-		"unitsPerColumn", 10,
+		"unitsPerColumn", C["Raid"].MaxUnitPerColumn,
 		"columnSpacing", T.Scale(4),
 		"columnAnchorPoint", "LEFT"
 end
@@ -777,11 +800,11 @@ function TukuiUnitFrames:GetPetRaidFramesAttributes()
 		"SecureGroupPetHeaderTemplate", 
 		Properties,
 		"showParty", false,
-		"showRaid", true,
+		"showRaid", C["Raid"].ShowPets,
 		"showSolo", false,
 		"maxColumns", math.ceil(40/5),
 		"point", "TOP",
-		"unitsPerColumn", 10,
+		"unitsPerColumn", C["Raid"].MaxUnitPerColumn,
 		"columnSpacing", T.Scale(4),
 		"columnAnchorPoint", "LEFT",
 		"yOffset", T.Scale(-4),
@@ -877,24 +900,26 @@ function TukuiUnitFrames:CreateUnits()
 	self.Units.Focus = Focus
 	self.Units.FocusTarget = FocusTarget
 	
-	local Arena = {}
+	if (C.UnitFrames.Arena) then
+		local Arena = {}
 	
-	for i = 1, 5 do
-		Arena[i] = oUF:Spawn("arena"..i, nil)
-		Arena[i]:SetParent(Panels.PetBattleHider)
-		if (i == 1) then
-			Arena[i]:SetPoint("BOTTOMRIGHT", TukuiUnitFrames.Anchor, "TOPRIGHT", 0, 300)
-		else
-			Arena[i]:SetPoint("BOTTOM", Arena[i-1], "TOP", 0, 35)
-		end
-		Arena[i]:Size(200, 29)
+		for i = 1, 5 do
+			Arena[i] = oUF:Spawn("arena"..i, nil)
+			Arena[i]:SetParent(Panels.PetBattleHider)
+			if (i == 1) then
+				Arena[i]:SetPoint("BOTTOMRIGHT", TukuiUnitFrames.Anchor, "TOPRIGHT", 0, 300)
+			else
+				Arena[i]:SetPoint("BOTTOM", Arena[i-1], "TOP", 0, 35)
+			end
+			Arena[i]:Size(200, 29)
 		
-		Movers:RegisterFrame(Arena[i])
+			Movers:RegisterFrame(Arena[i])
+		end
+	
+		self.Units.Arena = Arena
+	
+		self:CreateArenaPreparationFrames()
 	end
-	
-	self.Units.Arena = Arena
-	
-	self:CreateArenaPreparationFrames()
 	
 	local Boss = {}
 	
@@ -929,16 +954,18 @@ function TukuiUnitFrames:CreateUnits()
 		local Raid = oUF:SpawnHeader(TukuiUnitFrames:GetRaidFramesAttributes())
 		Raid:SetParent(Panels.PetBattleHider)
 		Raid:Point("TOPLEFT", UIParent, "TOPLEFT", 30, -30)
-
-		local Pet = oUF:SpawnHeader(TukuiUnitFrames:GetPetRaidFramesAttributes())
-		Pet:SetParent(Panels.PetBattleHider)
-		Pet:Point("TOPLEFT", Raid, "TOPRIGHT", 4, 0)
+		
+		if C.Raid.ShowPets then
+			local Pet = oUF:SpawnHeader(TukuiUnitFrames:GetPetRaidFramesAttributes())
+			Pet:SetParent(Panels.PetBattleHider)
+			Pet:Point("TOPLEFT", Raid, "TOPRIGHT", 4, 0)
+			
+			TukuiUnitFrames.Headers.RaidPet = Pet
+			Movers:RegisterFrame(Pet)
+		end
 		
 		TukuiUnitFrames.Headers.Raid = Raid
-		TukuiUnitFrames.Headers.RaidPet = Pet
-		
 		Movers:RegisterFrame(Raid)
-		Movers:RegisterFrame(Pet)
 	end
 	
 	Movers:RegisterFrame(Player)
@@ -1016,10 +1043,12 @@ function TukuiUnitFrames:Enable()
 	self:CreateUnits()
 	
 	-- Arena Preparation
-	self:RegisterEvent("PLAYER_ENTERING_WORLD")
-	self:RegisterEvent("ARENA_PREP_OPPONENT_SPECIALIZATIONS")
-	self:RegisterEvent("ARENA_OPPONENT_UPDATE")	
-	self:SetScript("OnEvent", self.OnEvent)
+	if (C.UnitFrames.Arena) then
+		self:RegisterEvent("PLAYER_ENTERING_WORLD")
+		self:RegisterEvent("ARENA_PREP_OPPONENT_SPECIALIZATIONS")
+		self:RegisterEvent("ARENA_OPPONENT_UPDATE")	
+		self:SetScript("OnEvent", self.OnEvent)
+	end
 end
 
 T["UnitFrames"] = TukuiUnitFrames

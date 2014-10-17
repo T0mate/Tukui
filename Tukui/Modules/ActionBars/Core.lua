@@ -37,6 +37,7 @@ function TukuiActionBars:DisableBlizzard()
 		
 		Button:UnregisterAllEvents()
 		Button:SetAttribute("statehidden", true)
+		Button:SetAttribute("showgrid", 1)
 	end
 	
 	hooksecurefunc("TalentFrame_LoadUI", function()
@@ -305,9 +306,17 @@ function TukuiActionBars:UpdateStanceBar(...)
 				
 				if IsActive then
 					StanceBarFrame.lastSelected = Button:GetID()
-					Button:SetChecked(1)
+					Button:SetChecked(true)
+					
+					if Button.Backdrop then
+						Button.Backdrop:SetBackdropBorderColor(0, 1, 0)
+					end
 				else
-					Button:SetChecked(0)
+					Button:SetChecked(false)
+					
+					if Button.Backdrop then
+						Button.Backdrop:SetBackdropBorderColor(unpack(C.Medias.BorderColor))
+					end
 				end
 
 				if IsCastable then

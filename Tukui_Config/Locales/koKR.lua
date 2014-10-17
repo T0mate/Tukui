@@ -55,13 +55,13 @@ TukuiConfig["koKR"] = {
 		},
 		
 		["ShapeShift"] = {
-			["Name"] = "ShapeShift",
-			["Desc"] = "Enable Tukui style ShapeShift bar",
+			["Name"] = "Stance Bar",
+			["Desc"] = "Enable Tukui style stance bar",
 		},
 		
 		["Pet"] = {
-			["Name"] = "Pet",
-			["Desc"] = "Enable Tukui style Pet bar",
+			["Name"] = "Pet Bar",
+			["Desc"] = "Enable Tukui style pet bar",
 		},
 		
 		["NormalButtonSize"] = {
@@ -365,6 +365,11 @@ TukuiConfig["koKR"] = {
 			["Name"] = "NamePlates Font",
 			["Desc"] = "Set a font for nameplates",
 		},
+		
+		["HealthText"] = {
+			["Name"] = "Show Health Text",
+			["Desc"] = "Add a text in the nameplate which show current health",
+		},
 	},
 	
 	["Party"] = {
@@ -412,12 +417,27 @@ TukuiConfig["koKR"] = {
 			["Name"] = "Health Bar Texture",
 			["Desc"] = "Set a texture for health bars",
 		},
+		
+		["RangeAlpha"] = {
+			["Name"] = "Out Of Range Alpha",
+			["Desc"] = "Set the transparency of units that are out of range",
+		},
 	},
 	
 	["Raid"] = {
 		["Enable"] = {
 			["Name"] = "Enable Raid Frames",
 			["Desc"] = "Derp",
+		},
+		
+		["ShowPets"] = {
+			["Name"] = "Show Pets",
+			["Desc"] = "Derp",
+		},
+		
+		["MaxUnitPerColumn"] = {
+			["Name"] = "Raid members per column",
+			["Desc"] = "Change the max number of raid members per column",
 		},
 		
 		["HealBar"] = {
@@ -587,6 +607,11 @@ TukuiConfig["koKR"] = {
 		["DarkTheme"] = {
 			["Name"] = "Dark Theme",
 			["Desc"] = "If enabled, unit frames will be a dark color with class colored power bars",
+		},
+		
+		["Threat"] = {
+			["Name"] = "Enable threat display",
+			["Desc"] = "Health Bar on party and raid members will turn if they have aggro",
 		},
 		
 		["Font"] = {

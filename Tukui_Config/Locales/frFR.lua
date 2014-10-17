@@ -55,13 +55,18 @@ TukuiConfig["frFR"] = {
 		},
 		
 		["ShapeShift"] = {
-			["Name"] = "Postures",
-			["Desc"] = "Activer les barre des postures Tukui",
+			["Name"] = "Barre de Postures",
+			["Desc"] = "Activer les barre des postures",
 		},
 		
 		["Pet"] = {
-			["Name"] = "Familier",
-			["Desc"] = "Activer la barre de Familier Tukui",
+			["Name"] = "Barre du Familier",
+			["Desc"] = "Activer la barre de Familier",
+		},
+		
+		["SwitchBarOnStance"] = {
+			["Name"] = "Changement de barre sur posture",
+			["Desc"] = "Change la barre d'action principale lorsque l'on change de posture",
 		},
 		
 		["NormalButtonSize"] = {
@@ -365,6 +370,11 @@ TukuiConfig["frFR"] = {
 			["Name"] = "Police de caractère",
 			["Desc"] = "Définir la police de caractère des barres d'unités",
 		},
+		
+		["HealthText"] = {
+			["Name"] = "Show Health Text",
+			["Desc"] = "Add a text in the nameplate which show current health",
+		},
 	},
 	
 	["Party"] = {
@@ -412,12 +422,27 @@ TukuiConfig["frFR"] = {
 			["Name"] = "Texture de la barre de santé",
 			["Desc"] = "Définir une texture pour les barres de santé",
 		},
+		
+		["RangeAlpha"] = {
+			["Name"] = "Opacité hors-d'atteinte",
+			["Desc"] = "Défini l'opacité des unitées qui sont hors d'atteinte",
+		},
 	},
 	
 	["Raid"] = {
 		["Enable"] = {
 			["Name"] = "Activer les cadres de raid",
 			["Desc"] = "Derp",
+		},
+		
+		["ShowPets"] = {
+			["Name"] = "Show Pets",
+			["Desc"] = "Derp",
+		},
+		
+		["MaxUnitPerColumn"] = {
+			["Name"] = "Raid members per column",
+			["Desc"] = "Change the max number of raid members per column",
 		},
 		
 		["HealBar"] = {
@@ -587,6 +612,16 @@ TukuiConfig["frFR"] = {
 		["DarkTheme"] = {
 			["Name"] = "Theme sombre",
 			["Desc"] = "Si activé, les cadres d'unités seront d'une couleur sombre avec les barres de puissance aux couleurs des classes",
+		},
+		
+		["Threat"] = {
+			["Name"] = "Enable threat display",
+			["Desc"] = "Health Bar on party and raid members will turn if they have aggro",
+		},
+		
+		["Arena"] = {
+			["Name"] = "Arena Frames",
+			["Desc"] = "Display arena opponents when inside a battleground or arena",
 		},
 		
 		["Font"] = {

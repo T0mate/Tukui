@@ -64,6 +64,11 @@ TukuiConfig["deDE"] = {
 			["Desc"] = "Schalte Tukui Style Begleiterleiste ein",
 		},
 		
+		["SwitchBarOnStance"] = {
+			["Name"] = "Swap main bar on new stance",
+			["Desc"] = "Enable main action bar swap when you change stance.",
+		},
+		
 		["NormalButtonSize"] = {
 			["Name"] = "Tastengröße",
 			["Desc"] = "Lege die Größe für die Aktionsleistentasten fest",
@@ -365,6 +370,11 @@ TukuiConfig["deDE"] = {
 			["Name"] = "Namensplaketten Schriftart",
 			["Desc"] = "Legt die Schriftart der Namensplaketten fest",
 		},
+		
+		["HealthText"] = {
+			["Name"] = "Show Health Text",
+			["Desc"] = "Add a text in the nameplate which show current health",
+		},
 	},
 	
 	["Party"] = {
@@ -412,12 +422,27 @@ TukuiConfig["deDE"] = {
 			["Name"] = "Gesundheitsleisten Texture",
 			["Desc"] = "Lege die Texture für die Gesundheitsleisten fest",
 		},
+		
+		["RangeAlpha"] = {
+			["Name"] = "Außer Reichweite Alpha",
+			["Desc"] = "Legt die Tranzparenz für Einheiten fest die außer Reichweite sind",
+		},
 	},
 	
 	["Raid"] = {
 		["Enable"] = {
 			["Name"] = "Schalte Schlachtzugsfenster ein",
 			["Desc"] = "Derp",
+		},
+		
+		["ShowPets"] = {
+			["Name"] = "Show Pets",
+			["Desc"] = "Derp",
+		},
+		
+		["MaxUnitPerColumn"] = {
+			["Name"] = "Raid members per column",
+			["Desc"] = "Change the max number of raid members per column",
 		},
 		
 		["HealBar"] = {
@@ -582,6 +607,16 @@ TukuiConfig["deDE"] = {
 		["DarkTheme"] = {
 			["Name"] = "Dark Theme",
 			["Desc"] = "Wenn eingeschalten, Werden die Einheitenfenster mit dunkel und die Powerbar in Klassen Farbe angezeit",
+		},
+		
+		["Threat"] = {
+			["Name"] = "Enable threat display",
+			["Desc"] = "Health Bar on party and raid members will turn if they have aggro",
+		},
+		
+		["Arena"] = {
+			["Name"] = "Arena Frames",
+			["Desc"] = "Display arena opponents when inside a battleground or arena",
 		},
 		
 		["Font"] = {

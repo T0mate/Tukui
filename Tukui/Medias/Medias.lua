@@ -2,9 +2,9 @@ local T, C = unpack(select(2, ...))
 
 C["Medias"] = {
 	-- Fonts (ENGLISH)
-	["Font"] = [=[Interface\Addons\Tukui\Medias\Fonts\normal_font.ttf]=],
+	["Font"] = [=[Interface\Addons\Tukui\Medias\Fonts\FRIZQT__.ttf]=],
 	["AltFont"] = [[Interface\AddOns\Tukui\Medias\Fonts\uf_font.ttf]],
-	["DamageFont"] = [[Interface\AddOns\Tukui\Medias\Fonts\combat_font.ttf]],
+	["DamageFont"] = [[Interface\AddOns\Tukui\Medias\Fonts\FRIZQT__.ttf]],
 	["PixelFont"] = [=[Interface\Addons\Tukui\Medias\Fonts\pixel_font.ttf]=],
 	["ActionBarFont"] = [=[Interface\Addons\Tukui\Medias\Fonts\actionbar_font.ttf]=],
 	["FRIZQT"] = [=[Interface\Addons\Tukui\Medias\Fonts\FRIZQT__.ttf]=],

@@ -58,6 +58,11 @@ TukuiConfig["ruRU"] = {
 			["Name"] = "Панель стоек/тотемы",
 			["Desc"] = "Использовать панель стоек/тотемов в стиле Tukui",
 		},
+
+		["SwitchBarOnStance"] = {
+			["Name"] = "Swap main bar on new stance",
+			["Desc"] = "Enable main action bar swap when you change stance.",
+		},
 		
 		["Pet"] = {
 			["Name"] = "Панель питомца",
@@ -365,6 +370,11 @@ TukuiConfig["ruRU"] = {
 			["Name"] = "Шрифт индикатора здоровья",
 			["Desc"] = "Установить шрифт для индикаторов здоровья",
 		},
+		
+		["HealthText"] = {
+			["Name"] = "Show Health Text",
+			["Desc"] = "Add a text in the nameplate which show current health",
+		},
 	},
 	
 	["Party"] = {
@@ -412,12 +422,27 @@ TukuiConfig["ruRU"] = {
 			["Name"] = "Текстура полосы здоровья",
 			["Desc"] = "Установить текстуру полосы здоровья",
 		},
+		
+		["RangeAlpha"] = {
+			["Name"] = "Прозрачность юнитов вне радиуса",
+			["Desc"] = "Установить прозрачность рамок юнитов вне досягаемости ваших заклинаний",
+		},
 	},
 	
 	["Raid"] = {
 		["Enable"] = {
 			["Name"] = "Рамки рейда",
 			["Desc"] = "Использовать рамки рейда Tukui",
+		},
+		
+		["ShowPets"] = {
+			["Name"] = "Show Pets",
+			["Desc"] = "Derp",
+		},
+		
+		["MaxUnitPerColumn"] = {
+			["Name"] = "Raid members per column",
+			["Desc"] = "Change the max number of raid members per column",
 		},
 		
 		["HealBar"] = {
@@ -587,6 +612,16 @@ TukuiConfig["ruRU"] = {
 		["DarkTheme"] = {
 			["Name"] = "Тёмное оформление",
 			["Desc"] = "Если включено, рамки юнитов окрасятся в тёмный цвет, а полоса ресурса в цвет класса",
+		},
+		
+		["Threat"] = {
+			["Name"] = "Enable threat display",
+			["Desc"] = "Health Bar on party and raid members will turn if they have aggro",
+		},
+		
+		["Arena"] = {
+			["Name"] = "Arena Frames",
+			["Desc"] = "Display arena opponents when inside a battleground or arena",
 		},
 		
 		["Font"] = {

@@ -55,13 +55,18 @@ TukuiConfig["esES"] = {
 		},
 		
 		["ShapeShift"] = {
-			["Name"] = "ShapeShift",
-			["Desc"] = "Enable Tukui style ShapeShift bar",
+			["Name"] = "Stance Bar",
+			["Desc"] = "Enable Tukui style stance bar",
 		},
 		
 		["Pet"] = {
-			["Name"] = "Pet",
-			["Desc"] = "Enable Tukui style Pet bar",
+			["Name"] = "Pet Bar",
+			["Desc"] = "Enable Tukui style pet bar",
+		},
+		
+		["SwitchBarOnStance"] = {
+			["Name"] = "Swap main bar on new stance",
+			["Desc"] = "Enable main action bar swap when you change stance.",
 		},
 		
 		["NormalButtonSize"] = {
@@ -365,6 +370,11 @@ TukuiConfig["esES"] = {
 			["Name"] = "NamePlates Font",
 			["Desc"] = "Set a font for nameplates",
 		},
+		
+		["HealthText"] = {
+			["Name"] = "Show Health Text",
+			["Desc"] = "Add a text in the nameplate which show current health",
+		},
 	},
 	
 	["Party"] = {
@@ -412,12 +422,27 @@ TukuiConfig["esES"] = {
 			["Name"] = "Health Bar Texture",
 			["Desc"] = "Set a texture for health bars",
 		},
+		
+		["RangeAlpha"] = {
+			["Name"] = "Out Of Range Alpha",
+			["Desc"] = "Set the transparency of units that are out of range",
+		},
 	},
 	
 	["Raid"] = {
 		["Enable"] = {
 			["Name"] = "Enable Raid Frames",
 			["Desc"] = "Derp",
+		},
+		
+		["ShowPets"] = {
+			["Name"] = "Show Pets",
+			["Desc"] = "Derp",
+		},
+		
+		["MaxUnitPerColumn"] = {
+			["Name"] = "Raid members per column",
+			["Desc"] = "Change the max number of raid members per column",
 		},
 		
 		["HealBar"] = {
@@ -587,6 +612,16 @@ TukuiConfig["esES"] = {
 		["DarkTheme"] = {
 			["Name"] = "Dark Theme",
 			["Desc"] = "If enabled, unit frames will be a dark color with class colored power bars",
+		},
+		
+		["Threat"] = {
+			["Name"] = "Enable threat display",
+			["Desc"] = "Health Bar on party and raid members will turn if they have aggro",
+		},
+		
+		["Arena"] = {
+			["Name"] = "Arena Frames",
+			["Desc"] = "Display arena opponents when inside a battleground or arena",
 		},
 		
 		["Font"] = {
