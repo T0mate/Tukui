@@ -13,16 +13,18 @@ function Loot:Move()
 			Movers:RegisterFrame(LootFrame)
 		end
 		
-		if (not TukuiDataPerChar.Move) then
-			TukuiDataPerChar.Move = {}
+		if (not TukuiData[GetRealmName()][UnitName("Player")].Move) then
+			TukuiData[GetRealmName()][UnitName("Player")].Move = {}
 		end
 		
-		if not (TukuiDataPerChar.Move.LootFrame) then
-			TukuiDataPerChar.Move.LootFrame = {"TOPLEFT", UIParent, "TOPLEFT", 16, -116}
+		if not (TukuiData[GetRealmName()][UnitName("Player")].Move.LootFrame) then
+			TukuiData[GetRealmName()][UnitName("Player")].Move.LootFrame = {"TOPLEFT", "UIParent", "TOPLEFT", 16, -116}
 		end
+		
+		local A1, _, A2, X, Y = unpack(TukuiData[GetRealmName()][UnitName("Player")].Move.LootFrame)
 		
 		LootFrame:ClearAllPoints()
-		LootFrame:SetPoint(unpack(TukuiDataPerChar.Move.LootFrame))
+		LootFrame:SetPoint(A1, UIParent, A2, X, Y)
 	end
 end
 

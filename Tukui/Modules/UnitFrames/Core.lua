@@ -253,17 +253,19 @@ function TukuiUnitFrames:UpdateNamePosition()
 end
 
 function TukuiUnitFrames:UpdateThreat(event, unit)
-	if not unit then
+	if (not unit) or (not C.UnitFrames.Threat) then
 		return
 	end
-	
+
 	local Colors = T["Colors"]
 	local Status = UnitThreatSituation(unit)
 	local Health = self.Health
 	local Class = select(2, UnitClass(unit))
 	local Color = not UnitIsPlayer(unit) and Colors.reaction[5] or C["UnitFrames"].DarkTheme and {0.2, 0.2, 0.2} or Colors.class[Class] or {0, 0, 0}
-
-	if Status and Status > 0 then
+	
+	if (not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit)) then
+		Health:SetStatusBarColor(unpack(Colors.disconnected))
+	elseif Status and Status > 0 then
 		Health:SetStatusBarColor(1, 0, 0)
 	else
 		Health:SetStatusBarColor(Color[1], Color[2], Color[3])
@@ -576,7 +578,7 @@ function TukuiUnitFrames:CreateAuraWatchIcon(icon)
 	
 	if (icon.cd) then
 		icon.cd:SetHideCountdownNumbers(true)
-		icon.cd:SetReverse()
+		icon.cd:SetReverse(true)
 	end
 	
 	icon.overlay:SetTexture()
@@ -681,6 +683,27 @@ function TukuiUnitFrames:UpdatePriestClassBars()
 		
 		Serendipity:ClearAllPoints()
 		Serendipity:Point("BOTTOMLEFT", Frame, "TOPLEFT", 0, 1)
+	else
+		Shadow:Point("TOPLEFT", -4, 4)
+	end
+end
+
+function TukuiUnitFrames:UpdateMageClassBars()
+	local Frame = self:GetParent()
+	local Arcane = Frame.ArcaneChargeBar
+	local Totems = Frame.Totems
+	local Shadow = Frame.Shadow
+
+	if (Arcane and Arcane:IsShown()) and (Totems and Totems:IsShown()) then
+		Shadow:Point("TOPLEFT", -4, 21)
+		
+		Totems:ClearAllPoints()
+		Totems:Point("BOTTOMLEFT", Frame, "TOPLEFT", 0, 10)		
+	elseif (Arcane and Arcane:IsShown()) or (Totems and Totems:IsShown()) then
+		Shadow:Point("TOPLEFT", -4, 12)
+		
+		Totems:ClearAllPoints()
+		Totems:Point("BOTTOMLEFT", Frame, "TOPLEFT", 0, 1)
 	else
 		Shadow:Point("TOPLEFT", -4, 4)
 	end

@@ -370,6 +370,11 @@ TukuiConfig["deDE"] = {
 			["Name"] = "Namensplaketten Schriftart",
 			["Desc"] = "Legt die Schriftart der Namensplaketten fest",
 		},
+		
+		["HealthText"] = {
+			["Name"] = "Show Health Text",
+			["Desc"] = "Add a text in the nameplate which show current health",
+		},
 	},
 	
 	["Party"] = {
@@ -416,6 +421,11 @@ TukuiConfig["deDE"] = {
 		["HealthTexture"] = {
 			["Name"] = "Gesundheitsleisten Texture",
 			["Desc"] = "Lege die Texture für die Gesundheitsleisten fest",
+		},
+		
+		["RangeAlpha"] = {
+			["Name"] = "Außer Reichweite Alpha",
+			["Desc"] = "Legt die Tranzparenz für Einheiten fest die außer Reichweite sind",
 		},
 	},
 	
@@ -597,6 +607,11 @@ TukuiConfig["deDE"] = {
 		["DarkTheme"] = {
 			["Name"] = "Dark Theme",
 			["Desc"] = "Wenn eingeschalten, Werden die Einheitenfenster mit dunkel und die Powerbar in Klassen Farbe angezeit",
+		},
+		
+		["Threat"] = {
+			["Name"] = "Enable threat display",
+			["Desc"] = "Health Bar on party and raid members will turn if they have aggro",
 		},
 		
 		["Arena"] = {

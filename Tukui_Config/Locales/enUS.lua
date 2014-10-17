@@ -363,6 +363,11 @@ TukuiConfig["enUS"] = {
 			["Name"] = "NamePlates Font",
 			["Desc"] = "Set a font for nameplates",
 		},
+		
+		["HealthText"] = {
+			["Name"] = "Show Health Text",
+			["Desc"] = "Add a text in the nameplate which show current health",
+		},
 	},
 	
 	["Party"] = {
@@ -409,6 +414,11 @@ TukuiConfig["enUS"] = {
 		["HealthTexture"] = {
 			["Name"] = "Health Bar Texture",
 			["Desc"] = "Set a texture for health bars",
+		},
+		
+		["RangeAlpha"] = {
+			["Name"] = "Out Of Range Alpha",
+			["Desc"] = "Set the transparency of units that are out of range",
 		},
 	},
 	
@@ -595,6 +605,11 @@ TukuiConfig["enUS"] = {
 		["DarkTheme"] = {
 			["Name"] = "Dark Theme",
 			["Desc"] = "If enabled, unit frames will be a dark color with class colored power bars",
+		},
+		
+		["Threat"] = {
+			["Name"] = "Enable threat display",
+			["Desc"] = "Health Bar on party and raid members will turn if they have aggro",
 		},
 		
 		["Arena"] = {

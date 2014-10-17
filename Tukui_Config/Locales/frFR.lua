@@ -370,6 +370,11 @@ TukuiConfig["frFR"] = {
 			["Name"] = "Police de caractère",
 			["Desc"] = "Définir la police de caractère des barres d'unités",
 		},
+		
+		["HealthText"] = {
+			["Name"] = "Show Health Text",
+			["Desc"] = "Add a text in the nameplate which show current health",
+		},
 	},
 	
 	["Party"] = {
@@ -416,6 +421,11 @@ TukuiConfig["frFR"] = {
 		["HealthTexture"] = {
 			["Name"] = "Texture de la barre de santé",
 			["Desc"] = "Définir une texture pour les barres de santé",
+		},
+		
+		["RangeAlpha"] = {
+			["Name"] = "Opacité hors-d'atteinte",
+			["Desc"] = "Défini l'opacité des unitées qui sont hors d'atteinte",
 		},
 	},
 	
@@ -602,6 +612,11 @@ TukuiConfig["frFR"] = {
 		["DarkTheme"] = {
 			["Name"] = "Theme sombre",
 			["Desc"] = "Si activé, les cadres d'unités seront d'une couleur sombre avec les barres de puissance aux couleurs des classes",
+		},
+		
+		["Threat"] = {
+			["Name"] = "Enable threat display",
+			["Desc"] = "Health Bar on party and raid members will turn if they have aggro",
 		},
 		
 		["Arena"] = {

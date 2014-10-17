@@ -365,6 +365,11 @@ TukuiConfig["zhCN"] = {
 			["Name"] = "姓名板字体",
 			["Desc"] = "设置姓名板字体",
 		},
+		
+		["HealthText"] = {
+			["Name"] = "Show Health Text",
+			["Desc"] = "Add a text in the nameplate which show current health",
+		},
 	},
 	
 	["Party"] = {
@@ -411,6 +416,11 @@ TukuiConfig["zhCN"] = {
 		["HealthTexture"] = {
 			["Name"] = "治疗纹理",
 			["Desc"] = "设置治疗纹理",
+		},
+		
+		["RangeAlpha"] = {
+			["Name"] = "超出范围ALPH",
+			["Desc"] = "设置的单位，超出范围的透明度",
 		},
 	},
 	
@@ -597,6 +607,11 @@ TukuiConfig["zhCN"] = {
 		["DarkTheme"] = {
 			["Name"] = "黑暗的主题",
 			["Desc"] = "如果启用，单元框架将是一个暗色使用类彩色动力条",
+		},
+		
+		["Threat"] = {
+			["Name"] = "Enable threat display",
+			["Desc"] = "Health Bar on party and raid members will turn if they have aggro",
 		},
 		
 		["Arena"] = {
