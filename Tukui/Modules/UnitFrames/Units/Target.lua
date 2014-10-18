@@ -8,6 +8,7 @@ function TukuiUnitFrames:Target()
 	local DarkTheme = C["UnitFrames"].DarkTheme
 	local HealthTexture = T.GetTexture(C["UnitFrames"].HealthTexture)
 	local PowerTexture = T.GetTexture(C["UnitFrames"].PowerTexture)
+	local CastTexture = T.GetTexture(C["UnitFrames"].CastTexture)
 	local Font = T.GetFont(C["UnitFrames"].Font)
 	
 	self:RegisterForClicks("AnyUp")
@@ -161,7 +162,7 @@ function TukuiUnitFrames:Target()
 
 		CastBar.Background = CastBar:CreateTexture(nil, "BORDER")
 		CastBar.Background:SetAllPoints(CastBar)
-		CastBar.Background:SetTexture(C.Medias.Normal)
+		CastBar.Background:SetTexture(CastTexture)
 		CastBar.Background:SetVertexColor(0.15, 0.15, 0.15)
 
 		CastBar.Time = CastBar:CreateFontString(nil, "OVERLAY")
@@ -230,35 +231,42 @@ function TukuiUnitFrames:Target()
 	-- The animation is currently broken. I tried some things out but i dont get it working at the moment.
 	-- Also the icons in PostCreateAura are not working.
 	--------------------------
-	local Buffs = CreateFrame("Frame", nil, self)
-	local Debuffs = CreateFrame("Frame", nil, self)
+	if (C.UnitFrames.TargetAuras) then
+		local Buffs = CreateFrame("Frame", nil, self)
+		local Debuffs = CreateFrame("Frame", nil, self)
 
-	Buffs:Point("BOTTOMLEFT", self, "TOPLEFT", 0, 4)
+		Buffs:Point("BOTTOMLEFT", self, "TOPLEFT", 0, 4)
 
-	Buffs:SetHeight(26)
-	Buffs:SetWidth(252)
-	Buffs.size = 26
-	Buffs.num = 36
-	Buffs.numRow = 9
+		Buffs:SetHeight(26)
+		Buffs:SetWidth(252)
+		Buffs.size = 26
+		Buffs.num = 36
+		Buffs.numRow = 9
 
-	Debuffs:SetHeight(26)
-	Debuffs:SetWidth(252)
-	Debuffs:SetPoint("BOTTOMLEFT", Buffs, "TOPLEFT", -2, 2)
-	Debuffs.size = 26
-	Debuffs.num = 36
+		Debuffs:SetHeight(26)
+		Debuffs:SetWidth(252)
+		Debuffs:SetPoint("BOTTOMLEFT", Buffs, "TOPLEFT", -2, 2)
+		Debuffs.size = 26
+		Debuffs.num = 36
+		Debuffs.numRow = 9
 
-	Buffs.spacing = 2
-	Buffs.initialAnchor = "TOPLEFT"
-	Buffs.PostCreateIcon = TukuiUnitFrames.PostCreateAura
-	Buffs.PostUpdateIcon = TukuiUnitFrames.PostUpdateAura
+		Buffs.spacing = 2
+		Buffs.initialAnchor = "TOPLEFT"
+		Buffs.PostCreateIcon = TukuiUnitFrames.PostCreateAura
+		Buffs.PostUpdateIcon = TukuiUnitFrames.PostUpdateAura
+		Buffs.PostUpdate = TukuiUnitFrames.UpdateDebuffsHeaderPosition
 
-	Debuffs.spacing = 2
-	Debuffs.initialAnchor = "TOPRIGHT"
-	Debuffs["growth-y"] = "UP"
-	Debuffs["growth-x"] = "LEFT"
-	Debuffs.PostCreateIcon = TukuiUnitFrames.PostCreateAura
-	Debuffs.PostUpdateIcon = TukuiUnitFrames.PostUpdateAura
-	Debuffs.onlyShowPlayer = C.UnitFrames.OnlySelfDebuffs
+		Debuffs.spacing = 2
+		Debuffs.initialAnchor = "TOPRIGHT"
+		Debuffs["growth-y"] = "UP"
+		Debuffs["growth-x"] = "LEFT"
+		Debuffs.PostCreateIcon = TukuiUnitFrames.PostCreateAura
+		Debuffs.PostUpdateIcon = TukuiUnitFrames.PostUpdateAura
+		Debuffs.onlyShowPlayer = C.UnitFrames.OnlySelfDebuffs
+		
+		self.Buffs = Buffs
+		self.Debuffs = Debuffs
+	end
 	
 	if (C.UnitFrames.CombatLog) then
 		local CombatFeedbackText = Health:CreateFontString(nil, "OVERLAY")
@@ -285,37 +293,41 @@ function TukuiUnitFrames:Target()
 		self.CombatFeedbackText = CombatFeedbackText
 	end
 	
-	local ComboPoints = CreateFrame("Frame", nil, self)
-	ComboPoints:Point("BOTTOMLEFT", self, "TOPLEFT", 0, 1)
-	ComboPoints:Width(250)
-	ComboPoints:Height(8)
-	ComboPoints:SetBackdrop(TukuiUnitFrames.Backdrop)
-	ComboPoints:SetBackdropColor(0, 0, 0)
-	ComboPoints:SetBackdropBorderColor(unpack(C["General"].BorderColor))
+	if (C.UnitFrames.ComboBar) then
+		local ComboPoints = CreateFrame("Frame", nil, self)
+		ComboPoints:Point("BOTTOMLEFT", self, "TOPLEFT", 0, 1)
+		ComboPoints:Width(250)
+		ComboPoints:Height(8)
+		ComboPoints:SetBackdrop(TukuiUnitFrames.Backdrop)
+		ComboPoints:SetBackdropColor(0, 0, 0)
+		ComboPoints:SetBackdropBorderColor(unpack(C["General"].BorderColor))
 
-	for i = 1, 5 do
-		ComboPoints[i] = CreateFrame("StatusBar", nil, ComboPoints)
-		ComboPoints[i]:Height(8)
-		ComboPoints[i]:SetStatusBarTexture(C.Medias.Normal)
+		for i = 1, 5 do
+			ComboPoints[i] = CreateFrame("StatusBar", nil, ComboPoints)
+			ComboPoints[i]:Height(8)
+			ComboPoints[i]:SetStatusBarTexture(C.Medias.Normal)
 		
-		if i == 1 then
-			ComboPoints[i]:Point("LEFT", ComboPoints, "LEFT", 0, 0)
-			ComboPoints[i]:Width(250 / 5)
-		else
-			ComboPoints[i]:Point("LEFT", ComboPoints[i-1], "RIGHT", 1, 0)
-			ComboPoints[i]:Width(250 / 5 - 1)
-		end					
-	end
+			if i == 1 then
+				ComboPoints[i]:Point("LEFT", ComboPoints, "LEFT", 0, 0)
+				ComboPoints[i]:Width(250 / 5)
+			else
+				ComboPoints[i]:Point("LEFT", ComboPoints[i-1], "RIGHT", 1, 0)
+				ComboPoints[i]:Width(250 / 5 - 1)
+			end					
+		end
 	
-	ComboPoints:SetScript("OnShow", function(self) 
-		TukuiUnitFrames.UpdateShadow(self, 12)
-		TukuiUnitFrames.UpdateBuffsHeaderPosition(self, 14)
-	end)
+		ComboPoints:SetScript("OnShow", function(self) 
+			TukuiUnitFrames.UpdateShadow(self, 12)
+			TukuiUnitFrames.UpdateBuffsHeaderPosition(self, 14)
+		end)
 
-	ComboPoints:SetScript("OnHide", function(self)
-		TukuiUnitFrames.UpdateShadow(self, 4)
-		TukuiUnitFrames.UpdateBuffsHeaderPosition(self, 4)
-	end)
+		ComboPoints:SetScript("OnHide", function(self)
+			TukuiUnitFrames.UpdateShadow(self, 4)
+			TukuiUnitFrames.UpdateBuffsHeaderPosition(self, 4)
+		end)
+		
+		self.ComboPointsBar = ComboPoints
+	end
 	
 	local RaidIcon = Health:CreateTexture(nil, "OVERLAY")
 	RaidIcon:SetSize(16, 16)
@@ -335,9 +347,6 @@ function TukuiUnitFrames:Target()
 		self.WeakenedSoul = WSBar
 	end
 
-	self.Buffs = Buffs
-	self.Debuffs = Debuffs
-
 	self:Tag(Name, "[Tukui:GetNameColor][Tukui:NameLong] [Tukui:DiffColor][level] [shortclassification]")
 	self.Name = Name
 	self.Panel = Panel
@@ -345,6 +354,5 @@ function TukuiUnitFrames:Target()
 	self.Health.bg = Health.Background
 	self.Power = Power
 	self.Power.bg = Power.Background
-	self.ComboPointsBar = ComboPoints
 	self.RaidIcon = RaidIcon
 end

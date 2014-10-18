@@ -59,11 +59,19 @@ function Tooltip:CreateAnchor()
 	Movers:RegisterFrame(Anchor)
 end
 
-function Tooltip:SetTooltipDefaultAnchor()
+function Tooltip:SetTooltipDefaultAnchor(parent)
 	local Anchor = Tooltip.Anchor
 	
-	self:SetOwner(Anchor)
-	self:SetAnchorType("ANCHOR_TOPRIGHT", 0, 9)
+	if (C.Tooltips.MouseOver) then
+		if (parent ~= UIParent) then
+			self:SetOwner(parent, "ANCHOR_NONE")
+		else
+			self:SetOwner(parent, "ANCHOR_CURSOR")
+		end	
+	else
+		self:SetOwner(Anchor)
+		self:SetAnchorType("ANCHOR_TOPRIGHT", 0, 9)
+	end
 end
 
 function Tooltip:GetColor(unit)
@@ -294,6 +302,12 @@ function Tooltip:SetColor()
 end
 
 function Tooltip:OnUpdate(elapsed)
+	local Owner = self:GetOwner()
+
+	if (not Owner) then
+		return
+	end
+    
 	local Red, Green, Blue = self:GetBackdropColor()
 	local Owner = self:GetOwner():GetName()
 	local Anchor = self:GetAnchorType()
@@ -345,7 +359,10 @@ function Tooltip:Enable()
 		return
 	end
 	
-	self:CreateAnchor()
+	if not C.Tooltips.MouseOver then
+		self:CreateAnchor()
+	end
+	
 	hooksecurefunc("GameTooltip_SetDefaultAnchor", self.SetTooltipDefaultAnchor)
 
 	for _, Tooltip in pairs(Tooltip.Tooltips) do

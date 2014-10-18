@@ -209,6 +209,24 @@ function TukuiUnitFrames:UpdateBuffsHeaderPosition(height)
 	Buffs:Point("BOTTOMLEFT", Frame, "TOPLEFT", 0, height)
 end
 
+function TukuiUnitFrames:UpdateDebuffsHeaderPosition()
+	local NumBuffs = self.visibleBuffs
+	local PerRow = self.numRow
+	local Size = self.size
+	local Row = math.ceil((NumBuffs / PerRow))
+	local Parent = self:GetParent()
+	local Debuffs = Parent.Debuffs
+	local Y = Size * Row
+	local Addition = Size
+	
+	if NumBuffs == 0 then
+		Addition = 0
+	end
+	
+	Debuffs:ClearAllPoints() 
+	Debuffs:SetPoint("BOTTOMLEFT", self, "BOTTOMLEFT", -2, Y + Addition)
+end
+
 function TukuiUnitFrames:CustomCastTimeText(duration)
 	local Value = format("%.1f / %.1f", self.channeling and duration or self.max - duration, self.max)
 
@@ -645,9 +663,11 @@ function TukuiUnitFrames:CreateAuraWatch(frame)
 end
 
 function TukuiUnitFrames:EclipseDirection()
-	if (GetEclipseDirection() == "sun") then
+	local Power = UnitPower("Player", SPELL_POWER_ECLIPSE)
+	
+	if (Power < 0) then
 			self.Text:SetText("|cffE5994C"..L.UnitFrames.Starfire.."|r")
-	elseif (GetEclipseDirection() == "moon") then
+	elseif (Power > 0) then
 			self.Text:SetText("|cff4478BC"..L.UnitFrames.Wrath.."|r")
 	else
 			self.Text:SetText("")
@@ -779,6 +799,7 @@ function TukuiUnitFrames:GetRaidFramesAttributes()
 		"initial-height", T.Scale(50),
 		"showParty", true,
 		"showRaid", true,
+		"showPlayer", true,
 		"showSolo", false,
 		"xoffset", T.Scale(4),
 		"yOffset", T.Scale(-4),

@@ -475,6 +475,11 @@ TukuiConfig["esMX"] = {
 			["Desc"] = "Show the amount of health the unit lost.",
 		},
 		
+		["VerticalHealth"] = {
+			["Name"] = "Vertical Health",
+			["Desc"] = "Display health lost vertically",
+		},
+		
 		["Font"] = {
 			["Name"] = "Raid Frame Name Font",
 			["Desc"] = "Set a font for name text on raid frames",
@@ -505,6 +510,11 @@ TukuiConfig["esMX"] = {
 		["Enable"] = {
 			["Name"] = "Enable Tooltips",
 			["Desc"] = "Derp",
+		},
+		
+		["MouseOver"] = {
+			["Name"] = "Mouseover",
+			["Desc"] = "Enable mouseover tooltip",
 		},
 		
 		["HideOnUnitFrames"] = {
@@ -589,6 +599,11 @@ TukuiConfig["esMX"] = {
 			["Desc"] = "Create a tukui style totem bar",
 		},
 		
+		["ComboBar"] = {
+			["Name"] = "Combo Points",
+			["Desc"] = "Enable the combo points bar",
+		},
+		
 		["AnticipationBar"] = {
 			["Name"] = "Rogue Anticipation Bar",
 			["Desc"] = "Display a bar showing rogue anticipation points",
@@ -619,6 +634,31 @@ TukuiConfig["esMX"] = {
 			["Desc"] = "Display arena opponents when inside a battleground or arena",
 		},
 		
+		["TargetAuras"] = {
+			["Name"] = "Target Auras",
+			["Desc"] = "Display buffs and debuffs on target",
+		},
+		
+		["FocusAuras"] = {
+			["Name"] = "Focus Auras",
+			["Desc"] = "Display buffs and debuffs on focus",
+		},
+		
+		["FocusTargetAuras"] = {
+			["Name"] = "Focus Target Auras",
+			["Desc"] = "Display buffs and debuffs on focus target",
+		},
+		
+		["ArenaAuras"] = {
+			["Name"] = "Arena Frames Auras",
+			["Desc"] = "Display debuffs on arena frames",
+		},
+		
+		["BossAuras"] = {
+			["Name"] = "Boss Frames Auras",
+			["Desc"] = "Display debuffs on boss frames",
+		},
+		
 		["Font"] = {
 			["Name"] = "Unit Frame Font",
 			["Desc"] = "Set a font for unit frames",
@@ -632,6 +672,11 @@ TukuiConfig["esMX"] = {
 		["HealthTexture"] = {
 			["Name"] = "Health Bar Texture",
 			["Desc"] = "Set a texture for health bars",
+		},
+		
+		["CastTexture"] = {
+			["Name"] = "Cast Bar Texture",
+			["Desc"] = "Set a texture for cast bars",
 		},
 	},
 }

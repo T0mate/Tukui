@@ -480,6 +480,11 @@ TukuiConfig["ruRU"] = {
 			["Desc"] = "Показывать количество недостающего здоровья.",
 		},
 		
+		["VerticalHealth"] = {
+			["Name"] = "Vertical Health",
+			["Desc"] = "Display health lost vertically",
+		},
+		
 		["Font"] = {
 			["Name"] = "Шрифт имен на рамках рейда",
 			["Desc"] = "Установить шрифт для имен на рамках рейда",
@@ -510,6 +515,11 @@ TukuiConfig["ruRU"] = {
 		["Enable"] = {
 			["Name"] = "Включить Подсказки",
 			["Desc"] = "Использовать подсказки в стиле Tukui",
+		},
+		
+		["MouseOver"] = {
+			["Name"] = "Mouseover",
+			["Desc"] = "Enable mouseover tooltip",
 		},
 		
 		["HideOnUnitFrames"] = {
@@ -594,6 +604,11 @@ TukuiConfig["ruRU"] = {
 			["Desc"] = "Создаёт панель тотемов в стиле tukui",
 		},
 		
+		["ComboBar"] = {
+			["Name"] = "Combo Points",
+			["Desc"] = "Enable the combo points bar",
+		},
+		
 		["AnticipationBar"] = {
 			["Name"] = "Пполоса Предчувствия для разбойников",
 			["Desc"] = "Отображает панель Предчувствия разбойника с дополнительными комбо-поинтами",
@@ -624,6 +639,31 @@ TukuiConfig["ruRU"] = {
 			["Desc"] = "Display arena opponents when inside a battleground or arena",
 		},
 		
+		["TargetAuras"] = {
+			["Name"] = "Target Auras",
+			["Desc"] = "Display buffs and debuffs on target",
+		},
+		
+		["FocusAuras"] = {
+			["Name"] = "Focus Auras",
+			["Desc"] = "Display buffs and debuffs on focus",
+		},
+		
+		["FocusTargetAuras"] = {
+			["Name"] = "Focus Target Auras",
+			["Desc"] = "Display buffs and debuffs on focus target",
+		},
+		
+		["ArenaAuras"] = {
+			["Name"] = "Arena Frames Auras",
+			["Desc"] = "Display debuffs on arena frames",
+		},
+		
+		["BossAuras"] = {
+			["Name"] = "Boss Frames Auras",
+			["Desc"] = "Display debuffs on boss frames",
+		},
+		
 		["Font"] = {
 			["Name"] = "Шрифт рамок юнитов",
 			["Desc"] = "Установить шрифт рамок юнитов",
@@ -637,6 +677,11 @@ TukuiConfig["ruRU"] = {
 		["HealthTexture"] = {
 			["Name"] = "Текстура плосы здоровтья",
 			["Desc"] = "Установить текстуру для плосы здоровтья",
+		},
+		
+		["CastTexture"] = {
+			["Name"] = "Cast Bar Texture",
+			["Desc"] = "Set a texture for cast bars",
 		},
 	},
 }

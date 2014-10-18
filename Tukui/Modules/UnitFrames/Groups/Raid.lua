@@ -22,7 +22,10 @@ function TukuiUnitFrames:Raid()
 	Health:SetPoint("TOPRIGHT")
 	Health:Height(28)
 	Health:SetStatusBarTexture(HealthTexture)
-	Health:SetOrientation("VERTICAL")
+	
+	if C.Raid.VerticalHealth then
+		Health:SetOrientation("VERTICAL")
+	end
 	
 	Health.Background = Health:CreateTexture(nil, "BORDER")
 	Health.Background:SetAllPoints()
@@ -125,31 +128,41 @@ function TukuiUnitFrames:Raid()
 	
 	if (C.Raid.HealBar) then
 		local FirstBar = CreateFrame("StatusBar", nil, Health)
-		FirstBar:SetPoint("BOTTOM", Health:GetStatusBarTexture(), "TOP", 0, 0)
+		local SecondBar = CreateFrame("StatusBar", nil, Health)
+		local ThirdBar = CreateFrame("StatusBar", nil, Health)
+		
 		FirstBar:Width(66)
 		FirstBar:Height(28)
 		FirstBar:SetStatusBarTexture(C.Medias.Normal)
 		FirstBar:SetStatusBarColor(0, 0.3, 0.15, 1)
 		FirstBar:SetMinMaxValues(0,1)
-		FirstBar:SetOrientation("VERTICAL")
 		
-		local SecondBar = CreateFrame("StatusBar", nil, Health)
-		SecondBar:SetPoint("BOTTOM", Health:GetStatusBarTexture(), "TOP", 0, 0)
 		SecondBar:Width(66)
 		SecondBar:Height(28)
 		SecondBar:SetStatusBarTexture(C.Medias.Normal)
 		SecondBar:SetStatusBarColor(0, 0.3, 0, 1)
-		SecondBar:SetOrientation("VERTICAL")
-		
-		local ThirdBar = CreateFrame("StatusBar", nil, Health)
-		ThirdBar:SetPoint("BOTTOM", Health:GetStatusBarTexture(), "TOP", 0, 0)
+			
 		ThirdBar:Width(66)
 		ThirdBar:Height(28)
 		ThirdBar:SetStatusBarTexture(C.Medias.Normal)
 		ThirdBar:SetStatusBarColor(0.3, 0.3, 0, 1)
-		ThirdBar:SetOrientation("VERTICAL")
+		
+		if C.Raid.VerticalHealth then
+			FirstBar:SetOrientation("VERTICAL")
+			SecondBar:SetOrientation("VERTICAL")
+			ThirdBar:SetOrientation("VERTICAL")
+			
+			FirstBar:SetPoint("BOTTOM", Health:GetStatusBarTexture(), "TOP", 0, 0)
+			SecondBar:SetPoint("BOTTOM", Health:GetStatusBarTexture(), "TOP", 0, 0)
+			ThirdBar:SetPoint("BOTTOM", Health:GetStatusBarTexture(), "TOP", 0, 0)
+		else
+			FirstBar:SetPoint("LEFT", Health:GetStatusBarTexture(), "RIGHT", 0, 0)
+			SecondBar:SetPoint("LEFT", Health:GetStatusBarTexture(), "RIGHT", 0, 0)
+			ThirdBar:SetPoint("LEFT", Health:GetStatusBarTexture(), "RIGHT", 0, 0)			
+		end
 		
 		SecondBar:SetFrameLevel(ThirdBar:GetFrameLevel() + 1)
+		
 		FirstBar:SetFrameLevel(ThirdBar:GetFrameLevel() + 2)
 		
 		self.HealPrediction = {

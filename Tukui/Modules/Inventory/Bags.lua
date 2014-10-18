@@ -307,11 +307,9 @@ function Bags:CreateContainer(storagetype, ...)
 					ToggleBagsContainer.Text:SetTextColor(.4, .4, .4)
 				end
 			else
-				if BankFrame:IsShown() then
-					CloseBankFrame()
-				else
-					ToggleAllBags()
-				end
+				CloseAllBags()
+				CloseBankBagFrames()
+				CloseBankFrame()
 			end	
 		end)
 	
@@ -581,14 +579,20 @@ end
 
 function Bags:UpdateAllBags()
 	local NumRows, LastRowButton, NumButtons, LastButton = 0, ContainerFrame1Item1, 1, ContainerFrame1Item1
+	local FirstButton
 	
-	for Bag = 1, 5 do
+	for Bag = 5, 1, -1 do
 		local ID = Bag - 1
 		local Slots = GetContainerNumSlots(ID)
-		for Item = 1, Slots do
+		
+		for Item = Slots, 1, -1 do
 			local Button = _G["ContainerFrame"..Bag.."Item"..Item]
 			local Money = ContainerFrame1MoneyFrame
-
+			
+			if not FirstButton then
+				FirstButton = Button
+			end
+			
 			Button:ClearAllPoints()
 			Button:SetWidth(ButtonSize)
 			Button:SetHeight(ButtonSize)
@@ -609,7 +613,7 @@ function Bags:UpdateAllBags()
 			Money:SetFrameLevel(2)
 			Money:SetScale(1)
 			
-			if (Bag == 1 and Item == 1) then
+			if (Button == FirstButton) then
 				Button:SetPoint("TOPLEFT", Bags.Bag, "TOPLEFT", 10, -40)
 				LastRowButton = Button
 				LastButton = Button
@@ -790,7 +794,7 @@ function Bags:ToggleBags()
 	end
 	
 	-- Bank Toggle
-	if Bank:IsShown() then
+	if Bag:IsShown() and Bank:IsShown() and not ReagentBankFrame:IsShown() then		
 		self.Bank:Show()
 		
 		for i = 5, 11 do

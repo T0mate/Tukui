@@ -6,6 +6,7 @@ function TukuiUnitFrames:Arena()
 	local DarkTheme = C["UnitFrames"].DarkTheme
 	local HealthTexture = T.GetTexture(C["UnitFrames"].HealthTexture)
 	local PowerTexture = T.GetTexture(C["UnitFrames"].PowerTexture)
+	local CastTexture = T.GetTexture(C["UnitFrames"].CastTexture)
 	local Font = T.GetFont(C["UnitFrames"].Font)
 
 	self:RegisterForClicks("AnyUp")
@@ -93,17 +94,21 @@ function TukuiUnitFrames:Arena()
 	Name:SetFontObject(Font)
 	Name.frequentUpdates = 0.2
 	
-	local Debuffs = CreateFrame("Frame", nil, self)
-	Debuffs:SetHeight(26)
-	Debuffs:SetWidth(200)
-	Debuffs:Point("LEFT", self, "RIGHT", 4, 0)
-	Debuffs.size = 26
-	Debuffs.num = 5
-	Debuffs.spacing = 2
-	Debuffs.initialAnchor = "LEFT"
-	Debuffs["growth-x"] = "RIGHT"
-	Debuffs.PostCreateIcon = TukuiUnitFrames.PostCreateAura
-	Debuffs.PostUpdateIcon = TukuiUnitFrames.PostUpdateAura
+	if (C.UnitFrames.ArenaAuras) then
+		local Debuffs = CreateFrame("Frame", nil, self)
+		Debuffs:SetHeight(26)
+		Debuffs:SetWidth(200)
+		Debuffs:Point("LEFT", self, "RIGHT", 4, 0)
+		Debuffs.size = 26
+		Debuffs.num = 5
+		Debuffs.spacing = 2
+		Debuffs.initialAnchor = "LEFT"
+		Debuffs["growth-x"] = "RIGHT"
+		Debuffs.PostCreateIcon = TukuiUnitFrames.PostCreateAura
+		Debuffs.PostUpdateIcon = TukuiUnitFrames.PostUpdateAura
+	
+		self.Debuffs = Debuffs
+	end
 	
 	local SpecIcon = CreateFrame("Frame", nil, self)
 	SpecIcon:Size(22)
@@ -124,7 +129,7 @@ function TukuiUnitFrames:Arena()
 		CastBar:SetPoint("RIGHT", 0, 0)
 		CastBar:SetPoint("BOTTOM", 0, -22)
 		CastBar:SetHeight(16)
-		CastBar:SetStatusBarTexture(C.Medias.Normal)
+		CastBar:SetStatusBarTexture(CastTexture)
 		CastBar:SetFrameLevel(6)
 		CastBar:SetBackdrop(TukuiUnitFrames.Backdrop)
 		CastBar:SetBackdropColor(unpack(C.Medias.BackdropColor))
@@ -171,7 +176,6 @@ function TukuiUnitFrames:Arena()
 	self.Power = Power
 	self.Power.bg = Power.Background
 	self.Name = Name
-	self.Debuffs = Debuffs
 	self.PVPSpecIcon = SpecIcon
 	self.Trinket = Trinket
 	self.RaidIcon = RaidIcon

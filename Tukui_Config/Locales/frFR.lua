@@ -480,6 +480,11 @@ TukuiConfig["frFR"] = {
 			["Desc"] = "Indiquez le montant de la santé perdue de l'unité.",
 		},
 		
+		["VerticalHealth"] = {
+			["Name"] = "Vertical Health",
+			["Desc"] = "Display health lost vertically",
+		},
+		
 		["Font"] = {
 			["Name"] = "Police de caractère des noms",
 			["Desc"] = "Définir la police de caractère des noms des cadre de raid",
@@ -510,6 +515,11 @@ TukuiConfig["frFR"] = {
 		["Enable"] = {
 			["Name"] = "Activer infobulles",
 			["Desc"] = "Derp",
+		},
+		
+		["MouseOver"] = {
+			["Name"] = "Mouseover",
+			["Desc"] = "Enable mouseover tooltip",
 		},
 		
 		["HideOnUnitFrames"] = {
@@ -594,6 +604,11 @@ TukuiConfig["frFR"] = {
 			["Desc"] = "Créer une barre de totem de style Tukui",
 		},
 		
+		["ComboBar"] = {
+			["Name"] = "Combo Points",
+			["Desc"] = "Enable the combo points bar",
+		},
+		
 		["AnticipationBar"] = {
 			["Name"] = "Barre d'anticipation Voleur",
 			["Desc"] = "Afficher une barre indiquant les points d'anticipation voleur",
@@ -624,6 +639,31 @@ TukuiConfig["frFR"] = {
 			["Desc"] = "Display arena opponents when inside a battleground or arena",
 		},
 		
+		["TargetAuras"] = {
+			["Name"] = "Target Auras",
+			["Desc"] = "Display buffs and debuffs on target",
+		},
+		
+		["FocusAuras"] = {
+			["Name"] = "Focus Auras",
+			["Desc"] = "Display buffs and debuffs on focus",
+		},
+		
+		["FocusTargetAuras"] = {
+			["Name"] = "Focus Target Auras",
+			["Desc"] = "Display buffs and debuffs on focus target",
+		},
+		
+		["ArenaAuras"] = {
+			["Name"] = "Arena Frames Auras",
+			["Desc"] = "Display debuffs on arena frames",
+		},
+		
+		["BossAuras"] = {
+			["Name"] = "Boss Frames Auras",
+			["Desc"] = "Display debuffs on boss frames",
+		},
+		
 		["Font"] = {
 			["Name"] = "Police de caractère",
 			["Desc"] = "Défini une police de caractère pour les cadres unités",
@@ -637,6 +677,11 @@ TukuiConfig["frFR"] = {
 		["HealthTexture"] = {
 			["Name"] = "Texture de la barre de santé",
 			["Desc"] = "Définir une texture pour les barres de santé",
+		},
+		
+		["CastTexture"] = {
+			["Name"] = "Cast Bar Texture",
+			["Desc"] = "Set a texture for cast bars",
 		},
 	},
 }

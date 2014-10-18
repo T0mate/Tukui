@@ -475,6 +475,11 @@ TukuiConfig["zhCN"] = {
 			["Desc"] = "显示治疗单位的损失量.",
 		},
 		
+		["VerticalHealth"] = {
+			["Name"] = "Vertical Health",
+			["Desc"] = "Display health lost vertically",
+		},
+		
 		["Font"] = {
 			["Name"] = "Raid框架名字字体",
 			["Desc"] = "设置RAID框架名字字体",
@@ -505,6 +510,11 @@ TukuiConfig["zhCN"] = {
 		["Enable"] = {
 			["Name"] = "启用工具提示",
 			["Desc"] = "Derp",
+		},
+		
+		["MouseOver"] = {
+			["Name"] = "Mouseover",
+			["Desc"] = "Enable mouseover tooltip",
 		},
 		
 		["HideOnUnitFrames"] = {
@@ -589,6 +599,11 @@ TukuiConfig["zhCN"] = {
 			["Desc"] = "启用tukui风格图腾",
 		},
 		
+		["ComboBar"] = {
+			["Name"] = "Combo Points",
+			["Desc"] = "Enable the combo points bar",
+		},
+		
 		["AnticipationBar"] = {
 			["Name"] = "盗贼隐藏栏",
 			["Desc"] = "显示一栏显示盗贼预期点",
@@ -619,6 +634,31 @@ TukuiConfig["zhCN"] = {
 			["Desc"] = "Display arena opponents when inside a battleground or arena",
 		},
 		
+		["TargetAuras"] = {
+			["Name"] = "Target Auras",
+			["Desc"] = "Display buffs and debuffs on target",
+		},
+		
+		["FocusAuras"] = {
+			["Name"] = "Focus Auras",
+			["Desc"] = "Display buffs and debuffs on focus",
+		},
+		
+		["FocusTargetAuras"] = {
+			["Name"] = "Focus Target Auras",
+			["Desc"] = "Display buffs and debuffs on focus target",
+		},
+		
+		["ArenaAuras"] = {
+			["Name"] = "Arena Frames Auras",
+			["Desc"] = "Display debuffs on arena frames",
+		},
+		
+		["BossAuras"] = {
+			["Name"] = "Boss Frames Auras",
+			["Desc"] = "Display debuffs on boss frames",
+		},
+		
 		["Font"] = {
 			["Name"] = "单元框架字体",
 			["Desc"] = "设置字体的单元框架",
@@ -632,6 +672,11 @@ TukuiConfig["zhCN"] = {
 		["HealthTexture"] = {
 			["Name"] = "治疗条纹理",
 			["Desc"] = "设置治疗条纹理",
+		},
+		
+		["CastTexture"] = {
+			["Name"] = "Cast Bar Texture",
+			["Desc"] = "Set a texture for cast bars",
 		},
 	},
 }
