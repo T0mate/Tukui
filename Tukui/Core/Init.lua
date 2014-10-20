@@ -87,6 +87,5 @@ Graphic:SetScript("OnEvent", function(self, event)
 	-- unload
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 end)
-=======
 
 DisableAddOn("Tukui_ConfigUI")
