@@ -27,6 +27,7 @@ SLASH_RELOADUI1 = "/rl"
 SlashCmdList.RELOADUI = ReloadUI
 
 Tukui = Engine
+<<<<<<< HEAD
 if (Tukui[1].ScreenWidth > 3840) or (UIParent:GetWidth() + 1 > Tukui[1].ScreenWidth) then
 	local width = Tukui[1].ScreenWidth
 	local height = Tukui[1].ScreenHeight
@@ -86,3 +87,7 @@ Graphic:SetScript("OnEvent", function(self, event)
 	-- unload
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 end)
+=======
+
+DisableAddOn("Tukui_ConfigUI")
+>>>>>>> upstream/master
