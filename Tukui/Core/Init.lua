@@ -82,6 +82,10 @@ Graphic:SetScript("OnEvent", function(self, event)
 		UIParent:SetSize(width, height)
 		UIParent:ClearAllPoints()
 		UIParent:SetPoint("CENTER")		
+		
+		local point, relativeTo, relativePoint, xOfs, yOfs = WorldMapScreenAnchor:GetPoint()
+		WorldMapScreenAnchor:ClearAllPoints()
+		WorldMapScreenAnchor:SetPoint(point, UIParent, relativePoint, xOfs, yOfs)
 	end
 	
 	-- unload
