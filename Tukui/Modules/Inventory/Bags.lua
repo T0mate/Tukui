@@ -15,6 +15,7 @@ local BagHelpBox = BagHelpBox
 local ButtonSize, ButtonSpacing, ItemsPerRow
 local Bags = CreateFrame("Frame")
 local Inventory = T["Inventory"]
+local QuestColor = {1, 1, 0}
 
 local BlizzardBags = {
 	CharacterBag0Slot,
@@ -24,14 +25,33 @@ local BlizzardBags = {
 }
 
 local BlizzardBank = {
-	BankFrameBag1,
-	BankFrameBag2,
-	BankFrameBag3,
-	BankFrameBag4,
-	BankFrameBag5,
-	BankFrameBag6,
-	BankFrameBag7,
+	BankSlotsFrame["Bag1"],
+	BankSlotsFrame["Bag2"],
+	BankSlotsFrame["Bag3"],
+	BankSlotsFrame["Bag4"],
+	BankSlotsFrame["Bag5"],
+	BankSlotsFrame["Bag6"],
+	BankSlotsFrame["Bag7"],
 }
+
+local BagType = {
+	[8] = true,     -- Leatherworking Bag
+	[16] = true,    -- Inscription Bag
+	[32] = true,    -- Herb Bag
+	[64] = true,    -- Enchanting Bag
+	[128] = true,   -- Engineering Bag
+	[512] = true,   -- Gem Bag
+	[1024] = true,  -- Mining Bag
+	[32768] = true, -- Fishing Bag
+}
+
+function Bags:IsProfessionBag(bag)
+	local Type = select(2, GetContainerNumFreeSlots(bag))
+	
+	if BagType[Type] then
+		return true
+	end
+end
 
 function Bags:SkinBagButton()
 	if self.IsSkinned then
@@ -510,6 +530,14 @@ function Bags:SlotUpdate(id, button)
 	local IsNewItem = C_NewItems.IsNewItem(id, button:GetID())
 	local IsBattlePayItem = IsBattlePayItem(id, button:GetID())
 	local NewItem = button.NewItemTexture
+	local IsProfBag = self:IsProfessionBag(id)
+	
+	-- Letting you style this
+	if IsProfBag then
+		
+	else
+		--button:SetBackdropColor(unpack(C["General"].BackdropColor))
+	end
 	
 	if IsNewItem then
 		NewItem:SetAlpha(0)
@@ -534,8 +562,6 @@ function Bags:SlotUpdate(id, button)
 	end
 	
 	if IsQuestItem then
-		local QuestColor = {1, 1, 0}
-		
 		if (button.BorderColor ~= QuestColor) then
 			button:SetBackdropBorderColor(1, 1, 0)
 			
@@ -548,7 +574,7 @@ function Bags:SlotUpdate(id, button)
 	if ItemLink then
 		local Name, _, Rarity, _, _, Type = GetItemInfo(ItemLink)
 		
-		if not Lock and Rarity and Rarity > 1 then
+		if (not Lock and Rarity and Rarity > 1) then
 			if (button.BorderColor ~= GetItemQualityColor(Rarity)) then
 				button:SetBackdropBorderColor(GetItemQualityColor(Rarity))
 
@@ -731,14 +757,6 @@ function Bags:OpenBag(id)
 	local Size = GetContainerNumSlots(id)
 	local OpenFrame = ContainerFrame_GetOpenFrame()
 
-	if OpenFrame.size and OpenFrame.size ~= Size then
-		for i = 1, OpenFrame.size do
-			local Button = _G[OpenFrame:GetName().."Item"..i]
-			
-			Button:Hide()
-		end
-	end
-	
 	for i = 1, Size, 1 do
 		local Index = Size - i + 1
 		local Button = _G[OpenFrame:GetName().."Item"..i]
@@ -765,67 +783,78 @@ end
 function Bags:ToggleBags()
 	local Bag = ContainerFrame1
 	local Bank = BankFrame
-	local MerchantFrame = MerchantFrame
 	
-	if ((MerchantFrame:IsShown() or InboxFrame:IsVisible()) and Bag:IsShown()) then
+	-- Bag & Bank Close
+	if (self.Bag:IsShown() or self.Bank:IsShown()) then
+		if MerchantFrame:IsVisible() or InboxFrame:IsVisible() then
+			return
+		end
+		
+		CloseAllBags()
+		CloseBankBagFrames()
+		CloseBankFrame()
+		
 		return
 	end
-
-	-- Bags Toggle
-	if Bag:IsShown() then
-		if not Bank:IsShown() then
-			self.Bag:Hide()
-			self:CloseBag(0)
-			
-			for i = 1, 4 do
-				self:CloseBag(i)
-			end
-		end
-	else
+	
+	-- Bag Open
+	if not self.Bag:IsShown() then
+		-- Bags Toggle
 		self:OpenBag(0, 1)
-		
+	
 		for i = 1, 4 do
 			self:OpenBag(i, 1)
 		end	
-		
+	
 		if IsBagOpen(0) then
 			self.Bag:Show()
-			
+		
 			if not self.Bag.MoverAdded then
 				local Movers = T["Movers"]
-				
+			
 				Movers:RegisterFrame(self.Bag)
-				
+			
 				self.Bag.MoverAdded = true
 			end
 		end
 	end
 	
-	-- Bank Toggle
-	if Bag:IsShown() and Bank:IsShown() and not ReagentBankFrame:IsShown() then		
-		self.Bank:Show()
+	-- Bank Open
+	if not self.Bank:IsShown() then
+		if Bank:IsShown() then		
+			self.Bank:Show()
 		
-		for i = 5, 11 do
-			if (not IsBagOpen(i)) then
+			for i = 5, 11 do
+				if (not IsBagOpen(i)) then
 
-				self:OpenBag(i, 1)
+					self:OpenBag(i, 1)
+				end
 			end
-		end
 		
-		if not self.Bank.MoverAdded then
-			local Movers = T["Movers"]
+			if not self.Bank.MoverAdded then
+				local Movers = T["Movers"]
 			
-			Movers:RegisterFrame(self.Bank)
+				Movers:RegisterFrame(self.Bank)
 			
-			self.Bank.MoverAdded = true
+				self.Bank.MoverAdded = true
+			end	
 		end
-	else
-		self.Bank:Hide()
-		
-		for i = 5, 11 do
-			self:CloseBag(i)
-		end		
 	end
+end
+
+function Bags:OnBagSwitch()
+	-- Used to update bag layout when we find a bag switch.
+	-- We use a little delay here just to make sure the button receive the drag command successfully.
+	T.Delay(1, function()
+		CloseAllBags()
+		
+		if Bags.Bank:IsShown() then
+			CloseBankBagFrames()
+			Bags.Bank:Hide()
+		end
+		
+		Bags:ToggleBags()
+	end)
 end
 
 function Bags:OnEvent(event, ...)
@@ -836,14 +865,21 @@ function Bags:OnEvent(event, ...)
 		
 		if ID <= 28 then
 			local Button = _G["BankFrameItem"..ID]
+			
 			self:SlotUpdate(-1, Button)
-		else
-			CloseBankFrame()
 		end
-	elseif (event == "BAG_UPDATE_COOLDOWN") then
-		-- Cooldown Update Codes ...
-	elseif (event == "ITEM_LOCK_CHANGED") then
-		-- Lock!
+	end
+end
+
+function Bags:AddHooks()
+	for _, Bag in pairs(BlizzardBags) do
+		Bag:HookScript("OnDragStop", Bags.OnBagSwitch)
+		Bag:HookScript("OnReceiveDrag", Bags.OnBagSwitch)
+	end
+	
+	for _, Bag in pairs(BlizzardBank) do
+		Bag:HookScript("OnDragStop", Bags.OnBagSwitch)
+		Bag:HookScript("OnReceiveDrag", Bags.OnBagSwitch)
 	end
 end
 
@@ -895,11 +931,12 @@ function Bags:Enable()
 	function OpenBackpack()  ToggleAllBags() end
 	function ToggleAllBags() self:ToggleBags() end
 	
+	-- Add Hooks
+	self:AddHooks()
+	
 	-- Register Events for Updates
 	self:RegisterEvent("BAG_UPDATE")
 	self:RegisterEvent("PLAYERBANKSLOTS_CHANGED")
-	self:RegisterEvent("BAG_UPDATE_COOLDOWN")
-	self:RegisterEvent("ITEM_LOCK_CHANGED")
 	self:SetScript("OnEvent", self.OnEvent)
 end
 

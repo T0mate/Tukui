@@ -48,7 +48,7 @@ C["Bags"] = {
 	["ItemsPerRow"] = 11,
 	["PulseNewItem"] = false,
 	["Font"] = "FRIZQT",
-	["BagFilter"] = true,
+	["BagFilter"] = false,
 }
 
 C["Chat"] = {
@@ -178,6 +178,7 @@ C["UnitFrames"] = {
 	["Threat"] = true,
 	["DarkTheme"] = false,
 	["Arena"] = true,
+	["Boss"] = true,
 	["Font"] = "FRIZQT",
 	["PowerTexture"] = "Tukui",
 	["HealthTexture"] = "Tukui",
