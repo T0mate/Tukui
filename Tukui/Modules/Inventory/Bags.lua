@@ -780,65 +780,90 @@ function Bags:CloseBag(id)
 	CloseBag(id)
 end
 
-function Bags:ToggleBags()
-	local Bag = ContainerFrame1
+function Bags:OpenAllBags()
+	self:OpenBag(0, 1)
+
+	for i = 1, 4 do
+		self:OpenBag(i, 1)
+	end	
+
+	if IsBagOpen(0) then
+		self.Bag:Show()
+	
+		if not self.Bag.MoverAdded then
+			local Movers = T["Movers"]
+		
+			Movers:RegisterFrame(self.Bag)
+		
+			self.Bag.MoverAdded = true
+		end
+	end
+end
+
+function Bags:OpenAllBankBags()
 	local Bank = BankFrame
 	
-	-- Bag & Bank Close
+	if Bank:IsShown() then		
+		self.Bank:Show()
+	
+		for i = 5, 11 do
+			if (not IsBagOpen(i)) then
+
+				self:OpenBag(i, 1)
+			end
+		end
+	
+		if not self.Bank.MoverAdded then
+			local Movers = T["Movers"]
+		
+			Movers:RegisterFrame(self.Bank)
+		
+			self.Bank.MoverAdded = true
+		end	
+	end
+end
+
+function Bags:CloseAllBags()
+	if MerchantFrame:IsVisible() or InboxFrame:IsVisible() then
+		return
+	end
+	
+	CloseAllBags()
+end
+
+function Bags:CloseAllBankBags()
+	local Bank = BankFrame
+	
+	if (Bank:IsVisible()) then
+		CloseBankBagFrames()
+		CloseBankFrame()
+	end
+end
+
+function Bags:ToggleBags()	
+	if (self.Bag:IsShown() and BankFrame:IsShown()) and (not self.Bank:IsShown())  and (not ReagentBankFrame:IsShown()) then
+		self:OpenAllBankBags()
+		
+		return
+	end
+	
 	if (self.Bag:IsShown() or self.Bank:IsShown()) then
 		if MerchantFrame:IsVisible() or InboxFrame:IsVisible() then
 			return
 		end
 		
-		CloseAllBags()
-		CloseBankBagFrames()
-		CloseBankFrame()
+		self:CloseAllBags()
+		self:CloseAllBankBags()
 		
 		return
 	end
 	
-	-- Bag Open
 	if not self.Bag:IsShown() then
-		-- Bags Toggle
-		self:OpenBag(0, 1)
-	
-		for i = 1, 4 do
-			self:OpenBag(i, 1)
-		end	
-	
-		if IsBagOpen(0) then
-			self.Bag:Show()
-		
-			if not self.Bag.MoverAdded then
-				local Movers = T["Movers"]
-			
-				Movers:RegisterFrame(self.Bag)
-			
-				self.Bag.MoverAdded = true
-			end
-		end
+		self:OpenAllBags()
 	end
 	
-	-- Bank Open
-	if not self.Bank:IsShown() then
-		if Bank:IsShown() then		
-			self.Bank:Show()
-		
-			for i = 5, 11 do
-				if (not IsBagOpen(i)) then
-
-					self:OpenBag(i, 1)
-				end
-			end
-		
-			if not self.Bank.MoverAdded then
-				local Movers = T["Movers"]
-			
-				Movers:RegisterFrame(self.Bank)
-			
-				self.Bank.MoverAdded = true
-			end	
-		end
+	if not self.Bank:IsShown() and BankFrame:IsShown() then
+		self:OpenAllBankBags()
 	end
 end
 
@@ -901,6 +926,7 @@ function Bags:Enable()
 	local Bag = ContainerFrame1
 	local GameMenu = GameMenuFrame
 	local Bank = BankFrameItem1
+	local BankFrame = BankFrame
 	local DataTextLeft = T["Panels"].DataTextLeft
 	local DataTextRight = T["Panels"].DataTextRight
 	
@@ -923,12 +949,18 @@ function Bags:Enable()
 		self.Bank:Hide()
 	end)
 	
+	BankFrame:HookScript("OnHide", function()
+		if self.Reagent and self.Reagent:IsShown() then
+			self.Reagent:Hide()
+		end
+	end)
+	
 	-- Rewrite Blizzard Bags Functions
 	function UpdateContainerFrameAnchors() end
 	function ToggleBag() ToggleAllBags() end
 	function ToggleBackpack() ToggleAllBags() end
 	function OpenAllBags() ToggleAllBags() end
-	function OpenBackpack()  ToggleAllBags() end
+	function OpenBackpack() ToggleAllBags() end
 	function ToggleAllBags() self:ToggleBags() end
 	
 	-- Add Hooks
@@ -938,6 +970,10 @@ function Bags:Enable()
 	self:RegisterEvent("BAG_UPDATE")
 	self:RegisterEvent("PLAYERBANKSLOTS_CHANGED")
 	self:SetScript("OnEvent", self.OnEvent)
+	
+	-- Force an update, setting colors
+	ToggleAllBags()
+	ToggleAllBags()
 end
 
 Inventory.Bags = Bags
