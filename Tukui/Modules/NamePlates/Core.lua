@@ -124,8 +124,8 @@ end
 function Plates:UpdateHealthText()
 	local MinHP, MaxHP = self.Health:GetMinMaxValues()
 	local CurrentHP = self.Health:GetValue()
-
-	self.Health.Text:SetText(T.ShortValue(CurrentHP).." / "..T.ShortValue(MaxHP))
+	local percentHP = CurrentHP/MaxHP*100
+	self.Health.Text:SetText(T.ShortValue(CurrentHP).." / "..T.ShortValue(MaxHP) .. " (".. string.format("%d",percentHP) .."%)")
 end
 
 function Plates:Skin(obj)
