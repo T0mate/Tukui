@@ -152,7 +152,7 @@ function TukuiUnitFrames:Target()
 		self.HealPrediction = {
 			myBar = FirstBar,
 			otherBar = SecondBar,
-			absBar = ThirdBar,
+			absorbBar = ThirdBar,
 			maxOverflow = 1,
 		}
 	end
@@ -178,6 +178,8 @@ function TukuiUnitFrames:Target()
 		CastBar.Text:SetFontObject(Font)
 		CastBar.Text:Point("LEFT", Panel, "LEFT", 4, 0)
 		CastBar.Text:SetTextColor(0.84, 0.75, 0.65)
+		CastBar.Text:SetWidth(166)
+		CastBar.Text:SetJustifyH("LEFT")
 
 		if (C.UnitFrames.CastBarIcon) then
 			CastBar.Button = CreateFrame("Frame", nil, CastBar)
