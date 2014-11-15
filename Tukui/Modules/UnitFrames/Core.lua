@@ -19,7 +19,6 @@ local UnitPlayerControlled = UnitPlayerControlled
 local UnitIsGhost = UnitIsGhost
 local UnitIsDead = UnitIsDead
 local UnitPowerType = UnitPowerType
-local Class = select(2, UnitClass("player"))
 
 TukuiUnitFrames.Units = {}
 TukuiUnitFrames.Headers = {}
@@ -278,9 +277,9 @@ function TukuiUnitFrames:UpdateThreat(event, unit)
 	local Colors = T["Colors"]
 	local Status = UnitThreatSituation(unit)
 	local Health = self.Health
-	local Class = select(2, UnitClass(unit))
-	local Color = not UnitIsPlayer(unit) and Colors.reaction[5] or C["UnitFrames"].DarkTheme and {0.2, 0.2, 0.2} or Colors.class[Class] or {0, 0, 0}
-	
+	local Class = select(2, UnitClass(unit)) or UNKNOWN
+	local Color = not UnitIsPlayer(unit) and Colors.reaction[5] or C["UnitFrames"].DarkTheme and {0.2, 0.2, 0.2} or Colors.class[Class] or Colors.disconnected or {0, 0, 0}
+
 	if (not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit)) then
 		Health:SetStatusBarColor(unpack(Colors.disconnected))
 	elseif Status and Status > 0 then
@@ -305,10 +304,6 @@ function TukuiUnitFrames:PostUpdateHealth(unit, min, max)
 		
 		if (IsRaid) then
 			TukuiUnitFrames.UpdateThreat(self:GetParent(), nil, unit)
-			
-			if (unit == "player") then
-				unit = raid
-			end
 		end
 		
 		if (C["UnitFrames"].DarkTheme ~= true and C["UnitFrames"].TargetEnemyHostileColor and unit == "target" and UnitIsEnemy(unit, "player") and UnitIsPlayer(unit)) or (C["UnitFrames"].DarkTheme ~= true and unit == "target" and not UnitIsPlayer(unit) and UnitIsFriend(unit, "player")) then
@@ -327,7 +322,11 @@ function TukuiUnitFrames:PostUpdateHealth(unit, min, max)
 		if (min ~= max) then
 			r, g, b = T.ColorGradient(min, max, 0.69, 0.31, 0.31, 0.65, 0.63, 0.35, 0.33, 0.59, 0.33)
 			if (unit == "player" and self:GetAttribute("normalUnit") ~= "pet") then
-				self.Value:SetFormattedText("|cffAF5050%d|r |cffD7BEA5-|r |cff%02x%02x%02x%d%%|r", min, r * 255, g * 255, b * 255, floor(min / max * 100))
+				if (IsRaid) then
+					self.Value:SetText("|cffff2222-"..TukuiUnitFrames.ShortValue(max-min).."|r")
+				else
+					self.Value:SetFormattedText("|cffAF5050%d|r |cffD7BEA5-|r |cff%02x%02x%02x%d%%|r", min, r * 255, g * 255, b * 255, floor(min / max * 100))
+				end
 			elseif (unit == "target" or (unit and strfind(unit, "boss%d"))) then
 				self.Value:SetFormattedText("|cffAF5050%s|r |cffD7BEA5-|r |cff%02x%02x%02x%d%%|r", TukuiUnitFrames.ShortValue(min), r * 255, g * 255, b * 255, floor(min / max * 100))
 			elseif (unit and strfind(unit, "arena%d")) or (unit == "focus") or (unit == "focustarget") then
@@ -604,6 +603,8 @@ end
 
 -- create the icon
 function TukuiUnitFrames:CreateAuraWatch(frame)
+	local Class = select(2, UnitClass("player"))
+
 	local Auras = CreateFrame("Frame", nil, frame)
 	Auras:SetPoint("TOPLEFT", frame.Health, 2, -2)
 	Auras:SetPoint("BOTTOMRIGHT", frame.Health, -2, 2)
