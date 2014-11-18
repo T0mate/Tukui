@@ -141,6 +141,8 @@ function Loading:OnEvent(event, addon)
 	elseif (event == "PLAYER_ENTERING_WORLD") then
 		-- OBJECTIVE TRACKER
 			T["Miscellaneous"]["ObjectiveTracker"]:Enable()
+	elseif (event =="SHIPMENT_CRAFTER_OPENED") then
+		GarrisonCapacitiveDisplayFrame:SetFrameStrata("HIGH")
 	end
 end
 
@@ -148,6 +150,7 @@ Loading:RegisterEvent("PLAYER_LOGIN")
 Loading:RegisterEvent("PLAYER_ENTERING_WORLD")
 Loading:RegisterEvent("ADDON_LOADED")
 Loading:SetScript("OnEvent", Loading.OnEvent)
+Loading:RegisterEvent("SHIPMENT_CRAFTER_OPENED")
 
 T["Loading"] = Loading
 
