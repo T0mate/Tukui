@@ -99,6 +99,8 @@ function Minimap:StyleMinimap()
 	QueueStatusMinimapButtonBorder:Kill()
 	QueueStatusFrame:StripTextures()
 	QueueStatusFrame:SetTemplate()
+	QueueStatusFrame:ClearAllPoints()
+	QueueStatusFrame:SetPoint("TOPLEFT", QueueStatusMinimapButton, "TOPRIGHT", 0, 0)
 
 	MiniMapInstanceDifficulty:ClearAllPoints()
 	MiniMapInstanceDifficulty:SetParent(Minimap)
