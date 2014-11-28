@@ -258,6 +258,12 @@ function Plates:Skin(obj)
 	Plate.NewName:SetPoint("RIGHT", NewPlate, 2, 0)
 	Plate.NewName:SetFont(FontName, FontSize - 2, FontFlags)
 	
+	-- Raid Icon
+	--point, relativeTo, relativePoint, xOfs, yOfs = Plate.Raid:GetPoint()
+	Plate.Raid:SetSize(20,20)
+	Plate.Raid:ClearAllPoints()
+	Plate.Raid:SetPoint('BOTTOM', Plate.NewName, 'TOP', 0, 0)
+	
 	-- Health Text
 	if C.NamePlates.HealthText then
 		Plate.Health.Text = Plate.Health:CreateFontString(nil, "OVERLAY")	
