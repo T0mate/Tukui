@@ -23,6 +23,10 @@ local UnitPowerType = UnitPowerType
 TukuiUnitFrames.Units = {}
 TukuiUnitFrames.Headers = {}
 TukuiUnitFrames.Framework = TukuiUnitFrameFramework
+TukuiUnitFrames.HighlightBorder = {
+	bgFile = "Interface\\Buttons\\WHITE8x8",
+	insets = {top = -2, left = -2, bottom = -2, right = -2}
+}
 
 TukuiUnitFrames.RaidBuffsTracking = {
 	PRIEST = {
@@ -33,6 +37,7 @@ TukuiUnitFrames.RaidBuffsTracking = {
 	},
 	DRUID = {
 		{774, "TOPLEFT", {0.8, 0.4, 0.8}},      -- Rejuvenation
+		{155777, "LEFT", {0.8, 0.4, 0.8}},      -- Germination
 		{8936, "TOPRIGHT", {0.2, 0.8, 0.2}},    -- Regrowth
 		{33763, "BOTTOMLEFT", {0.4, 0.8, 0.2}}, -- Lifebloom
 		{48438, "BOTTOMRIGHT", {0.8, 0.4, 0}},  -- Wild Growth
@@ -185,6 +190,19 @@ function TukuiUnitFrames:MouseOnPlayer()
 	end
 end
 
+
+function TukuiUnitFrames:Highlight()
+	if UnitIsUnit("focus", self.unit) then
+		self.Highlight:SetBackdropColor(218/255, 197/255, 92/255, .7)
+		self.Highlight:Show()
+	elseif UnitIsUnit("target", self.unit) then
+		self.Highlight:SetBackdropColor(75/255,  175/255, 76/255, 1)
+		self.Highlight:Show()	
+	else
+		self.Highlight:Hide()
+	end
+end
+
 function TukuiUnitFrames:UpdateShadow(height)
 	local Frame = self:GetParent()
 	local Shadow = Frame.Shadow
@@ -273,19 +291,34 @@ function TukuiUnitFrames:UpdateThreat(event, unit)
 	if (not unit) or (not C.UnitFrames.Threat) then
 		return
 	end
+	
+	local Panel = self.Panel
+	
+	if Panel then
+		local Status = UnitThreatSituation(unit)
+		
+		if Status and Status > 0 then
+			Panel:SetBackdropBorderColor(1, 0, 0)
+		else
+			Panel:SetBackdropBorderColor(C["General"].BorderColor[1] * 0.7, C["General"].BorderColor[2] * 0.7, C["General"].BorderColor[3] * 0.7)
+		end
+	end
+end
 
-	local Colors = T["Colors"]
-	local Status = UnitThreatSituation(unit)
-	local Health = self.Health
-	local Class = select(2, UnitClass(unit)) or UNKNOWN
-	local Color = not UnitIsPlayer(unit) and Colors.reaction[5] or C["UnitFrames"].DarkTheme and {0.2, 0.2, 0.2} or Colors.class[Class] or Colors.disconnected or {0, 0, 0}
-
-	if (not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit)) then
-		Health:SetStatusBarColor(unpack(Colors.disconnected))
-	elseif Status and Status > 0 then
-		Health:SetStatusBarColor(1, 0, 0)
+function TukuiUnitFrames:PreUpdateHealth(unit)
+	local DarkTheme = C["UnitFrames"].DarkTheme
+	local HostileColor = C["UnitFrames"].TargetEnemyHostileColor
+	
+	if (DarkTheme == true) or (HostileColor ~= true) then
+		return
+	end
+	
+	local Parent = self:GetParent()
+	
+	if UnitIsEnemy(unit, "player") then
+		self.colorClass = false
 	else
-		Health:SetStatusBarColor(Color[1], Color[2], Color[3])
+		self.colorClass = true
 	end
 end
 
@@ -301,23 +334,6 @@ function TukuiUnitFrames:PostUpdateHealth(unit, min, max)
 	else
 		local r, g, b
 		local IsRaid = string.match(self:GetParent():GetName(), "Button") or false
-		
-		if (IsRaid) then
-			TukuiUnitFrames.UpdateThreat(self:GetParent(), nil, unit)
-		end
-		
-		if (C["UnitFrames"].DarkTheme ~= true and C["UnitFrames"].TargetEnemyHostileColor and unit == "target" and UnitIsEnemy(unit, "player") and UnitIsPlayer(unit)) or (C["UnitFrames"].DarkTheme ~= true and unit == "target" and not UnitIsPlayer(unit) and UnitIsFriend(unit, "player")) then
-			local Colors = T["Colors"]
-			local Color = Colors.reaction[UnitReaction(unit, "player")]
-			
-			if Color then 
-				r, g, b = Color[1], Color[2], Color[3]
-				self:SetStatusBarColor(r, g, b)
-			else
-				r, g, b = 75/255,  175/255, 76/255
-				self:SetStatusBarColor(r, g, b)
-			end
-		end
 
 		if (min ~= max) then
 			r, g, b = T.ColorGradient(min, max, 0.69, 0.31, 0.31, 0.65, 0.63, 0.35, 0.33, 0.59, 0.33)
@@ -336,8 +352,12 @@ function TukuiUnitFrames:PostUpdateHealth(unit, min, max)
 			end
 		else
 			if (unit == "player" and self:GetAttribute("normalUnit") ~= "pet") then
-				self.Value:SetText("|cff559655"..max.."|r")
-			elseif (unit == "target" or unit == "focus"  or unit == "focustarget" or (unit and strfind(unit, "arena%d"))) then
+				if (IsRaid) then
+					self.Value:SetText(" ")
+				else
+					self.Value:SetText("|cff559655"..max.."|r")
+				end
+			elseif (unit == "target" or unit == "focus"  or unit == "focustarget" or (unit and strfind(unit, "arena%d")) or (unit and strfind(unit, "boss%d"))) then
 				self.Value:SetText("|cff559655"..TukuiUnitFrames.ShortValue(max).."|r")
 			else
 				self.Value:SetText(" ")
@@ -363,7 +383,7 @@ function TukuiUnitFrames:PostUpdatePower(unit, min, max)
 	else
 		if (min ~= max) then
 			if (pType == 0) then
-				if (unit == "target") then
+				if (unit == "target" or (unit and strfind(unit, "boss%d"))) then
 					self.Value:SetFormattedText("%d%% |cffD7BEA5-|r %s", floor(min / max * 100), TukuiUnitFrames.ShortValue(max - (max - min)))
 				elseif (unit == "player" and Parent:GetAttribute("normalUnit") == "pet" or unit == "pet") then
 					self.Value:SetFormattedText("%d%%", floor(min / max * 100))
@@ -376,7 +396,7 @@ function TukuiUnitFrames:PostUpdatePower(unit, min, max)
 				self.Value:SetText(max - (max - min))
 			end
 		else
-			if (unit == "pet" or unit == "target" or unit == "focus" or unit == "focustarget" or (unit and strfind(unit, "arena%d"))) then
+			if (unit == "pet" or unit == "target" or unit == "focus" or unit == "focustarget" or (unit and strfind(unit, "arena%d")) or (unit and strfind(unit, "boss%d"))) then
 				self.Value:SetText(TukuiUnitFrames.ShortValue(min))
 			else
 				self.Value:SetText(min)
@@ -681,6 +701,12 @@ function TukuiUnitFrames:UpdateBossAltPower(minimum, current, maximum)
 	local r, g, b = T.ColorGradient(current, maximum, 0, .8 ,0 ,.8 ,.8 ,0 ,.8 ,0 ,0)
 	
 	self:SetStatusBarColor(r, g, b)
+	
+	if self.Value then
+		local Text = self.Value
+		
+		Text:SetText(current.." / "..maximum)
+	end
 end
 
 function TukuiUnitFrames:Update()
@@ -885,7 +911,7 @@ end
 
 function TukuiUnitFrames:CreateUnits()
 	local Movers = T["Movers"]
-	
+
 	local Player = oUF:Spawn("player")
 	Player:SetPoint("BOTTOMLEFT", TukuiUnitFrames.Anchor, "TOPLEFT", 0, 8)
 	Player:SetParent(Panels.PetBattleHider)

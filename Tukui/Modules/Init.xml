@@ -49,6 +49,7 @@
 	<Script file="Miscellaneous\Durability.lua"/>
 	<Script file="Miscellaneous\Capture.lua"/>
 	<Script file="Miscellaneous\Ghost.lua"/>
+	<Script file="Miscellaneous\VehicleIndicator.lua"/>
 	
 	<!-- Auras -->
 	<Include file="Auras\Templates.xml"/>
@@ -74,6 +75,7 @@
 	<Script file="DataTexts\Elements\Durability.lua"/>
 	<Script file="DataTexts\Elements\FPS.lua"/>
 	<Script file="DataTexts\Elements\Friends.lua"/>
+	<Script file="DataTexts\Elements\Garrison.lua"/>
 	<Script file="DataTexts\Elements\Gold.lua"/>
 	<Script file="DataTexts\Elements\Guild.lua"/>
 	<Script file="DataTexts\Elements\Haste.lua"/>

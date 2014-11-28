@@ -4,22 +4,14 @@ local _, ns = ...
 local oUF = ns.oUF or oUF
 assert(oUF, 'oUF_ShadowOrbsBar was unable to locate oUF install')
 
-local SHADOW_ORBS_SHOW_LEVEL = SHADOW_ORBS_SHOW_LEVEL
-local PRIEST_BAR_NUM_LARGE_ORBS = PRIEST_BAR_NUM_LARGE_ORBS
-local PRIEST_BAR_NUM_SMALL_ORBS = PRIEST_BAR_NUM_SMALL_ORBS
-local SPELL_POWER_SHADOW_ORBS = SPELL_POWER_SHADOW_ORBS
-local SHADOW_ORB_MINOR_TALENT_ID = SHADOW_ORB_MINOR_TALENT_ID
-local SHADOW_ORBS_SHOW_LEVEL = SHADOW_ORBS_SHOW_LEVEL
-
 local Colors = { 148/255, 130/255, 201/255 }
-
-local function UpdateOrbs(self)
-	
-end
+local LockResize = false
 
 local function Update(self, event, unit, powerType)
-	if(self.unit ~= unit or (powerType and powerType ~= 'SHADOW_ORBS')) then return end
-	
+	if(unit ~= 'player' or (powerType and powerType ~= 'SHADOW_ORBS')) then
+		return
+	end
+
 	local pb = self.ShadowOrbsBar
 	
 	if(pb.PreUpdate) then
@@ -27,9 +19,8 @@ local function Update(self, event, unit, powerType)
 	end
 
 	local numOrbs = UnitPower("player", SPELL_POWER_SHADOW_ORBS)
-	local totalOrbs = UnitPowerMax("player", SPELL_POWER_SHADOW_ORBS)
 	
-	for i = 1, totalOrbs do
+	for i = 1, 5 do
 		if i <= numOrbs then
 			pb[i]:SetAlpha(1)
 		else
@@ -43,7 +34,7 @@ local function Update(self, event, unit, powerType)
 end
 
 local Path = function(self, ...)
-	return (self.ShadowOrbsBar.Override or Update) (self, ...)
+	return (self.ShadowOrbsBar.Override or Update)(self, ...)
 end
 
 local ForceUpdate = function(element)
@@ -57,8 +48,12 @@ local function Visibility(self, event, unit)
 	if (UnitLevel("player") >= SHADOW_ORBS_SHOW_LEVEL and spec == SPEC_PRIEST_SHADOW) then
 		pb:Show()
 		
+		if LockResize then
+			return
+		end
+		
 		-- Here we set the number of orbs show
-		local totalOrbs = UnitPowerMax("player", SPELL_POWER_SHADOW_ORBS)
+		local totalOrbs = IsSpellKnown(SHADOW_ORB_MINOR_TALENT_ID) and 5 or 3
 		local totalWidth = pb:GetWidth()
 		
 		if totalOrbs == 5 then
@@ -67,6 +62,8 @@ local function Visibility(self, event, unit)
 				pb[i]:Width(pb[i].OriginalWidth)
 				pb[i]:Point("LEFT", i == 1 and pb or pb[i-1], i == 1 and "LEFT" or "RIGHT", i == 1 and 0 or 1, 0)
 			end
+			
+			LockResize = true
 		else
 			pb[4]:Hide()
 			pb[5]:Hide()
@@ -93,11 +90,9 @@ local function Enable(self, unit)
 	if pb and unit == "player" then
 		pb.__owner = self
 		pb.ForceUpdate = ForceUpdate
-
-		self:RegisterEvent("UNIT_POWER", Path)
+		
 		self:RegisterEvent("UNIT_POWER_FREQUENT", Path)
-		self:RegisterEvent("UNIT_DISPLAYPOWER", Path)	
-		self:RegisterEvent("PLAYER_ENTERING_WORLD", Path)
+		self:RegisterEvent("UNIT_DISPLAYPOWER", Path)
 		self:RegisterEvent("PLAYER_TALENT_UPDATE", Visibility)
 		self:RegisterEvent("SPELLS_CHANGED", Visibility)
 		self:RegisterEvent("PLAYER_LEVEL_UP", Visibility)
@@ -123,14 +118,12 @@ end
 local function Disable(self)
 	local pb = self.ShadowOrbsBar
 	if(pb) then
-		self:UnregisterEvent("UNIT_POWER", Path)
 		self:UnregisterEvent("UNIT_POWER_FREQUENT", Path)
 		self:UnregisterEvent("UNIT_DISPLAYPOWER", Path)	
-		self:UnregisterEvent("PLAYER_ENTERING_WORLD", Path)
 		self:UnregisterEvent("PLAYER_TALENT_UPDATE", Visibility)
 		self:UnregisterEvent("SPELLS_CHANGED", Visibility)
 		self:UnregisterEvent("PLAYER_LEVEL_UP", Visibility)
 	end
 end
 
-oUF:AddElement('ShadowOrbsBar', Update, Enable, Disable)
+oUF:AddElement('ShadowOrbsBar', Path, Enable, Disable)
