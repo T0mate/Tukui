@@ -10,6 +10,7 @@ local Convert = T.RGBToHex
 local Scale = T.Scale
 local FrameNumber = 0
 local NameplateParent = WorldFrame
+local frameUpdateList = {}
 
 local Plates = CreateFrame("Frame", nil, WorldFrame)
 
@@ -99,6 +100,13 @@ function Plates:CastOnHide()
 end
 
 function Plates:OnShow()
+	if InCombatLockdown() then
+		table.insert(frameUpdateList, self)
+		-- return -- TODO: watch this carefully
+	else
+		frameUpdateList = {}
+		self.Bar:SetSize(self.NewPlate:GetWidth(), Plates.PlateHeight*2)
+	end
 	local Colors = T["Colors"]
 	local Name = self.Name:GetText() or "Unknown"
 	local Level = self.Level:GetText() or ""
@@ -119,7 +127,7 @@ function Plates:OnShow()
 	end
 	
 	self.Health:ClearAllPoints()
-	self.Health:SetPoint("TOP", self.NewPlate)
+	self.Health:SetPoint("BOTTOM", self.NewPlate)
 	self.Health:SetPoint("LEFT", self.NewPlate)
 	self.Health:SetPoint("RIGHT", self.NewPlate)
 	self.Health:SetHeight(Plates.PlateHeight)
@@ -253,10 +261,16 @@ function Plates:Skin(obj)
 	
 	-- Name
 	Plate.NewName = NewPlate:CreateFontString(nil, "OVERLAY")
-	Plate.NewName:SetPoint("BOTTOM", NewPlate, "TOP", 0, 2)
-	Plate.NewName:SetPoint("LEFT", NewPlate, -2, 0)
-	Plate.NewName:SetPoint("RIGHT", NewPlate, 2, 0)
+	Plate.NewName:SetPoint("BOTTOM", Plate.Health, "TOP", 0, 2)
+	Plate.NewName:SetPoint("LEFT", Plate.Health, -2, 0)
+	Plate.NewName:SetPoint("RIGHT", Plate.Health, 2, 0)
 	Plate.NewName:SetFont(FontName, FontSize - 2, FontFlags)
+	
+	-- Raid Icon
+	--point, relativeTo, relativePoint, xOfs, yOfs = Plate.Raid:GetPoint()
+	Plate.Raid:SetSize(20,20)
+	Plate.Raid:ClearAllPoints()
+	Plate.Raid:SetPoint('BOTTOM', Plate.NewName, 'TOP', 0, 0)
 	
 	-- Health Text
 	if C.NamePlates.HealthText then
@@ -278,6 +292,14 @@ function Plates:Skin(obj)
 	
 	-- Tell Tukui that X nameplate is Skinned
 	Plate.IsSkinned = true
+
+	if InCombatLockdown() then
+		table.insert(frameUpdateList, Plate)
+		-- return -- TODO: watch this carefully
+	else
+		frameUpdateList = {}
+		Plate.Bar:SetSize(Plate.NewPlate:GetWidth(), Plates.PlateHeight*2)
+	end
 end
 
 function Plates:IsNamePlate(obj)
