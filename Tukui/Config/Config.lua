@@ -151,7 +151,7 @@ C["Tooltips"] = {
 	["ShowSpec"] = true,
 	["MouseOver"] = false,
 	["HealthFont"] = "FRIZQT",
-	["HealthTexture"] = "FRIZQT",
+	["HealthTexture"] = "Tukui",
 }
 
 C["UnitFrames"] = {
@@ -175,9 +175,9 @@ C["UnitFrames"] = {
 	["ArenaAuras"] = true,
 	["BossAuras"] = true,
 	["SerendipityBar"] = true,
-	["OnlySelfDebuffs"] = false,
+	["OnlySelfBuffs"] = false,
 	["Threat"] = true,
-	["BossAltPowerText"] = true,
+	["AltPowerText"] = true,
 	["DarkTheme"] = false,
 	["Arena"] = true,
 	["Boss"] = true,

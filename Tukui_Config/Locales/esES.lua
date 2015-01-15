@@ -633,6 +633,11 @@ TukuiConfig["esES"] = {
 			["Name"] = "Display My Debuffs Only",
 			["Desc"] = "Only display our debuffs on the target frame",
 		},
+
+		["OnlySelfBuffs"] = {
+			["Name"] = "Display My Buffs Only",
+			["Desc"] = "Only display our buffs on the target frame",
+		},
 		
 		["DarkTheme"] = {
 			["Name"] = "Dark Theme",
@@ -679,9 +684,9 @@ TukuiConfig["esES"] = {
 			["Desc"] = "Display debuffs on boss frames",
 		},
 		
-		["BossAltPowerText"] = {
-			["Name"] = "Boss AltPower Text",
-			["Desc"] = "Display boss altpower text values on altpower bar",
+		["AltPowerText"] = {
+			["Name"] = "AltPower Text",
+			["Desc"] = "Display altpower text values on altpower bar",
 		},
 		
 		["Font"] = {
