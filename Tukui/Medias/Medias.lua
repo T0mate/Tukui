@@ -9,6 +9,9 @@ C["Medias"] = {
 	["ActionBarFont"] = [=[Interface\Addons\Tukui\Medias\Fonts\FRIZQT__.ttf]=],
 	["FRIZQT"] = [=[Interface\Addons\Tukui\Medias\Fonts\FRIZQT__.ttf]=],
 	
+	-- FONTS (RUSSIAN)
+	["DamageFontRussian"] = [[Interface\AddOns\Tukui\Medias\Fonts\combat_font_rus.ttf]],
+	
 	-- Textures
 	["Normal"] = [[Interface\AddOns\Tukui\Medias\Textures\normTex]],
 	["Glow"] = [[Interface\AddOns\Tukui\Medias\Textures\glowTex]],
