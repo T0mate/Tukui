@@ -108,16 +108,16 @@ function Plates:CastOnHide()
 end
 
 function Plates:OnShow()
-	if not self:IsShown() then
-		return
-	end
-	
 	if InCombatLockdown() then
 		table.insert(frameUpdateList, self)
 		-- return -- TODO: watch this carefully
 	else
 		frameUpdateList = {}
 		self.Bar:SetSize(self.NewPlate:GetWidth(), Plates.PlateHeight*2)
+	end
+	
+	if not self:IsShown() then
+		return
 	end
 
 	local Colors = T["Colors"]
@@ -306,6 +306,15 @@ function Plates:Skin(obj)
 	-- Tell Tukui that X nameplate is Skinned
 	Plate.IsSkinned = true
 
+	Plate.Bar:SetBackdrop(
+		{
+			bgFile = "Interface/Tooltips/UI-Tooltip-Background",
+			edgeFile = "",
+			tile = true, tileSize = 1, edgeSize = 0,
+			insets = { left = 0, right = 0, top = 0, bottom = 0 }
+		}
+	);
+	Plate.Bar:SetBackdropColor(0,0,0,.2);
 	if InCombatLockdown() then
 		table.insert(frameUpdateList, Plate)
 		-- return -- TODO: watch this carefully
