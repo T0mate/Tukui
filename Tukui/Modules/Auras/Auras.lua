@@ -18,9 +18,11 @@ TukuiAuras.ProxyIcon = "Interface\\Icons\\misc_arrowdown"
 function TukuiAuras:DisableBlizzardAuras()
 	BuffFrame:Kill()
 	TemporaryEnchantFrame:Kill()
+	ConsolidatedBuffs:ClearAllPoints()
 	ConsolidatedBuffs:Kill()
 	InterfaceOptionsFrameCategoriesButton12:SetScale(0.00001)
 	InterfaceOptionsFrameCategoriesButton12:SetAlpha(0)
+	SetCVar("consolidateBuffs", 0)
 end
 
 function TukuiAuras:StartOrStopFlash(timeleft)
@@ -154,7 +156,7 @@ function TukuiAuras:UpdateAura(index)
 end
 
 function TukuiAuras:UpdateTempEnchant(slot)
-	local Enchant = (slot == 16 and 2) or 5
+	local Enchant = (slot == 16 and 2) or 6
 	local Expiration = select(Enchant, GetWeaponEnchantInfo())
 	local Icon = GetInventoryItemTexture("player", slot)
 	

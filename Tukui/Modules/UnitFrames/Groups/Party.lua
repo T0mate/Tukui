@@ -102,7 +102,7 @@ function TukuiUnitFrames:Party()
 		self.Portrait = Portrait
 	end
 	
-	local Buffs = CreateFrame("Frame", nil, self)
+	local Buffs = CreateFrame("Frame", self:GetName()..'Buffs', self)
 	Buffs:Point("TOPLEFT", C.Party.Portrait and self.Portrait:GetParent() or self, "BOTTOMLEFT", 0, -6)
 	Buffs:SetHeight(24)
 	Buffs:SetWidth(250)
@@ -114,7 +114,7 @@ function TukuiUnitFrames:Party()
 	Buffs.PostCreateIcon = TukuiUnitFrames.PostCreateAura
 	Buffs.PostUpdateIcon = TukuiUnitFrames.PostUpdateAura
 	
-	local Debuffs = CreateFrame("Frame", nil, self)
+	local Debuffs = CreateFrame("Frame", self:GetName()..'Debuffs', self)
 	Debuffs:Point("LEFT", self, "RIGHT", 6, 0)
 	Debuffs:SetHeight(self:GetHeight())
 	Debuffs:SetWidth(250)
@@ -152,7 +152,7 @@ function TukuiUnitFrames:Party()
 		FirstBar:SetPoint("TOPLEFT", Health:GetStatusBarTexture(), "TOPRIGHT", 0, 0)
 		FirstBar:SetPoint("BOTTOMLEFT", Health:GetStatusBarTexture(), "BOTTOMRIGHT", 0, 0)
 		FirstBar:Width(Width)
-		FirstBar:SetStatusBarTexture(C.Medias.Normal)
+		FirstBar:SetStatusBarTexture(HealthTexture)
 		FirstBar:SetStatusBarColor(0, 0.3, 0.15, 1)
 		FirstBar:SetMinMaxValues(0,1)
 		
@@ -160,17 +160,17 @@ function TukuiUnitFrames:Party()
 		SecondBar:SetPoint("TOPLEFT", Health:GetStatusBarTexture(), "TOPRIGHT", 0, 0)
 		SecondBar:SetPoint("BOTTOMLEFT", Health:GetStatusBarTexture(), "BOTTOMRIGHT", 0, 0)
 		SecondBar:Width(Width)
-		SecondBar:SetStatusBarTexture(C.Medias.Normal)
+		SecondBar:SetStatusBarTexture(HealthTexture)
 		SecondBar:SetStatusBarColor(0, 0.3, 0, 1)
 		
 		local ThirdBar = CreateFrame("StatusBar", nil, Health)
 		ThirdBar:SetPoint("TOPLEFT", Health:GetStatusBarTexture(), "TOPRIGHT", 0, 0)
 		ThirdBar:SetPoint("BOTTOMLEFT", Health:GetStatusBarTexture(), "BOTTOMRIGHT", 0, 0)
 		ThirdBar:Width(Width)
-		ThirdBar:SetStatusBarTexture(C.Medias.Normal)
+		ThirdBar:SetStatusBarTexture(HealthTexture)
 		ThirdBar:SetStatusBarColor(0.3, 0.3, 0, 1)
 		
-		ThirdBar:SetFrameLevel(Health:GetFrameLevel() - 2)
+		ThirdBar:SetFrameLevel(Health:GetFrameLevel())
 		SecondBar:SetFrameLevel(ThirdBar:GetFrameLevel() + 1)
 		FirstBar:SetFrameLevel(ThirdBar:GetFrameLevel() + 2)
 		

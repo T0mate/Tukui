@@ -82,7 +82,7 @@ function Movers:CreateDragInfo()
 	self.DragInfo:SetAllPoints(self)
 	self.DragInfo:SetTemplate()
 	self.DragInfo:SetBackdropBorderColor(1, 0, 0)
-	self.DragInfo:FontString("Text", C.Medias.AltFont, 12)
+	self.DragInfo:FontString("Text", C.Medias.UnitFrameFont, 12)
 	self.DragInfo.Text:SetText(self:GetName())
 	self.DragInfo.Text:SetPoint("CENTER")
 	self.DragInfo.Text:SetTextColor(1, 0, 0)
@@ -161,6 +161,18 @@ function Movers:StartOrStopMoving()
 	end
 end
 
+function Movers:IsRegisteredFrame(frame)
+	local Match = false
+	
+	for i = 1, #self.Frames do
+		if self.Frames[i] == frame then
+			Match = true
+		end
+	end
+	
+	return Match
+end
+
 Movers:SetScript("OnEvent", function(self, event)
 	if (event == "PLAYER_ENTERING_WORLD") then
 		if not TukuiData[GetRealmName()][UnitName("Player")].Move then
@@ -171,8 +183,9 @@ Movers:SetScript("OnEvent", function(self, event)
 	
 		for Frame, Position in pairs(Data) do
 			local Frame = _G[Frame]
+			local IsRegistered = self:IsRegisteredFrame(Frame)
 			
-			if Frame then
+			if Frame and IsRegistered then
 				local Anchor1, Parent, Anchor2, X, Y = Frame:GetPoint()
 
 				self:SaveDefaults(Frame, Anchor1, Parent, Anchor2, X, Y)

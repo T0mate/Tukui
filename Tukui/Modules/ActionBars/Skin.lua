@@ -6,6 +6,7 @@ local Replace = string.gsub
 local SpellFlyout = SpellFlyout
 local FlyoutButtons = 0
 local ActionButton_HideOverlayGlow = ActionButton_HideOverlayGlow
+local Noop = function() end
 
 function TukuiActionBars:SkinButton()
 	local Name = self:GetName()
@@ -29,10 +30,12 @@ function TukuiActionBars:SkinButton()
 	
 	HotKey:ClearAllPoints()
 	HotKey:Point("TOPRIGHT", 0, -3)
-	
+
+	TukuiActionBars.UpdateHotKey(Button)
+
 	if Border and Button.isSkinned then
 		Border:SetTexture('')
-		if Border:IsShown() then
+		if Border:IsShown() and C.ActionBars.EquipBorder then
 			Button:SetBackdropBorderColor(.08, .70, 0)
 		else
 			Button:SetBackdropBorderColor(unpack(C['General'].BorderColor))
@@ -43,7 +46,12 @@ function TukuiActionBars:SkinButton()
 		local String = GetActionText(Action)
 		
 		if String then
-			local Text = string.sub(String, 1, 5)
+			local Text
+			if string.byte(String, 1) > 223 then
+				Text = string.sub(String, 1, 9)
+			else
+				Text = string.sub(String, 1, 4)
+			end
 			Btname:SetText(Text)
 		end
 	end
@@ -281,18 +289,35 @@ function TukuiActionBars:UpdateHotKey(btype)
 	Text = Replace(Text, "(s%-)", "S")
 	Text = Replace(Text, "(a%-)", "A")
 	Text = Replace(Text, "(c%-)", "C")
-	Text = Replace(Text, "(Mouse Button )", "M")
-	Text = Replace(Text, "(Middle Mouse)", "M3")
-	Text = Replace(Text, "(Mouse Wheel Up)", "MU")
-	Text = Replace(Text, "(Mouse Wheel Down)", "MD")
-	Text = Replace(Text, "(Num Pad )", "N")
-	Text = Replace(Text, "(Page Up)", "PU")
-	Text = Replace(Text, "(Page Down)", "PD")
-	Text = Replace(Text, "(Spacebar)", "SpB")
-	Text = Replace(Text, "(Insert)", "Ins")
-	Text = Replace(Text, "(Home)", "Hm")
-	Text = Replace(Text, "(Delete)", "Del")
-	Text = Replace(Text, "(Help)", "Hlp") -- mac
+	Text = Replace(Text, KEY_MOUSEWHEELDOWN , "MDn")
+    Text = Replace(Text, KEY_MOUSEWHEELUP , "MUp")
+	Text = Replace(Text, KEY_BUTTON3, "M3")
+	Text = Replace(Text, KEY_BUTTON4, "M4")
+	Text = Replace(Text, KEY_BUTTON5, "M5")
+	Text = Replace(Text, KEY_MOUSEWHEELUP, "MU")
+	Text = Replace(Text, KEY_MOUSEWHEELDOWN, "MD")
+	Text = Replace(Text, KEY_NUMPAD0, "N0")
+    Text = Replace(Text, KEY_NUMPAD1, "N1")
+    Text = Replace(Text, KEY_NUMPAD2, "N2")
+    Text = Replace(Text, KEY_NUMPAD3, "N3")
+    Text = Replace(Text, KEY_NUMPAD4, "N4")
+    Text = Replace(Text, KEY_NUMPAD5, "N5")
+    Text = Replace(Text, KEY_NUMPAD6, "N6")
+    Text = Replace(Text, KEY_NUMPAD7, "N7")
+    Text = Replace(Text, KEY_NUMPAD8, "N8")
+    Text = Replace(Text, KEY_NUMPAD9, "N9")
+    Text = Replace(Text, KEY_NUMPADDECIMAL, "N.")
+    Text = Replace(Text, KEY_NUMPADDIVIDE, "N/")
+    Text = Replace(Text, KEY_NUMPADMINUS, "N-")
+    Text = Replace(Text, KEY_NUMPADMULTIPLY, "N*")
+    Text = Replace(Text, KEY_NUMPADPLUS, "N+")
+	Text = Replace(Text, KEY_PAGEUP, "PU")
+	Text = Replace(Text, KEY_PAGEDOWN, "PD")
+	Text = Replace(Text, KEY_SPACE, "SpB")
+	Text = Replace(Text, KEY_INSERT, "Ins")
+	Text = Replace(Text, KEY_HOME, "Hm")
+	Text = Replace(Text, KEY_DELETE, "Del")
+	Text = Replace(Text, KEY_INSERT_MAC, "Hlp") -- mac
 	
 	if HotKey:GetText() == Indicator then
 		HotKey:SetText("")

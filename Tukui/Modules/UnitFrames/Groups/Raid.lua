@@ -32,7 +32,7 @@ function TukuiUnitFrames:Raid()
 	Health.Background:SetTexture(.1, .1, .1)
 	
 	if C.Raid.ShowHealthText then
-		Health.Value = Health:CreateFontString(nil, "OVERLAY")
+		Health.Value = Health:CreateFontString(nil, "OVERLAY", 1)
 		Health.Value:SetFontObject(HealthFont)
 		Health.Value:Point("CENTER", Health, 0, 0)
 	
@@ -97,11 +97,11 @@ function TukuiUnitFrames:Raid()
 	Panel:SetTemplate()
 	Panel:SetBackdropBorderColor(C["General"].BorderColor[1] * 0.7, C["General"].BorderColor[2] * 0.7, C["General"].BorderColor[3] * 0.7)
 	
-	local Name = Panel:CreateFontString(nil, "OVERLAY")
+	local Name = Panel:CreateFontString(nil, "OVERLAY", 1)
 	Name:SetPoint("CENTER")
 	Name:SetFontObject(Font)
 	
-	local ReadyCheck = Power:CreateTexture(nil, "OVERLAY")
+	local ReadyCheck = Power:CreateTexture(nil, "OVERLAY", 2)
 	ReadyCheck:Height(12)
 	ReadyCheck:Width(12)
 	ReadyCheck:SetPoint("CENTER")
@@ -116,7 +116,7 @@ function TukuiUnitFrames:Raid()
 	RaidIcon:SetPoint("TOP", self, 0, 8)
 	
 	if C["Raid"].ShowRessurection then
-		local ResurrectIcon = Health:CreateTexture(nil, "OVERLAY")
+		local ResurrectIcon = Health:CreateTexture(nil, "OVERLAY", 3)
 		ResurrectIcon:Size(16)
 		ResurrectIcon:SetPoint("CENTER")
 		
@@ -132,21 +132,21 @@ function TukuiUnitFrames:Raid()
 		local FirstBar = CreateFrame("StatusBar", nil, Health)
 		local SecondBar = CreateFrame("StatusBar", nil, Health)
 		local ThirdBar = CreateFrame("StatusBar", nil, Health)
-		
+
 		FirstBar:Width(66)
 		FirstBar:Height(28)
-		FirstBar:SetStatusBarTexture(C.Medias.Normal)
+		FirstBar:SetStatusBarTexture(HealthTexture)
 		FirstBar:SetStatusBarColor(0, 0.3, 0.15, 1)
 		FirstBar:SetMinMaxValues(0,1)
-		
+
 		SecondBar:Width(66)
 		SecondBar:Height(28)
-		SecondBar:SetStatusBarTexture(C.Medias.Normal)
+		SecondBar:SetStatusBarTexture(HealthTexture)
 		SecondBar:SetStatusBarColor(0, 0.3, 0, 1)
-			
+
 		ThirdBar:Width(66)
 		ThirdBar:Height(28)
-		ThirdBar:SetStatusBarTexture(C.Medias.Normal)
+		ThirdBar:SetStatusBarTexture(HealthTexture)
 		ThirdBar:SetStatusBarColor(0.3, 0.3, 0, 1)
 		
 		if C.Raid.VerticalHealth then
@@ -163,7 +163,7 @@ function TukuiUnitFrames:Raid()
 			ThirdBar:SetPoint("LEFT", Health:GetStatusBarTexture(), "RIGHT", 0, 0)			
 		end
 		
-		ThirdBar:SetFrameLevel(Health:GetFrameLevel() - 2)
+		ThirdBar:SetFrameLevel(Health:GetFrameLevel())
 		SecondBar:SetFrameLevel(ThirdBar:GetFrameLevel() + 1)
 		FirstBar:SetFrameLevel(ThirdBar:GetFrameLevel() + 2)
 		
@@ -183,13 +183,13 @@ function TukuiUnitFrames:Raid()
         RaidDebuffs:SetHeight(22)
         RaidDebuffs:SetWidth(22)
         RaidDebuffs:SetPoint("CENTER", Health)
-        RaidDebuffs:SetFrameStrata("HIGH")
+        RaidDebuffs:SetFrameLevel(Health:GetFrameLevel() + 20)
         RaidDebuffs:SetBackdrop(TukuiUnitFrames.Backdrop)
         RaidDebuffs:SetBackdropColor(0, 0, 0)
         RaidDebuffs:SetTemplate()
         RaidDebuffs:CreateShadow()
 
-        RaidDebuffs.icon = RaidDebuffs:CreateTexture(nil, "OVERLAY")
+        RaidDebuffs.icon = RaidDebuffs:CreateTexture(nil, "ARTWORK")
         RaidDebuffs.icon:SetTexCoord(.1, .9, .1, .9)
         RaidDebuffs.icon:SetInside(RaidDebuffs)
 
@@ -209,6 +209,7 @@ function TukuiUnitFrames:Raid()
         RaidDebuffs.count:SetTextColor(1, .9, 0)
 
         RaidDebuffs.SetDebuffTypeColor = RaidDebuffs.SetBackdropBorderColor
+        RaidDebuffs.Debuffs = TukuiUnitFrames.RaidDebuffsTracking
         
         self.RaidDebuffs = RaidDebuffs
 	end

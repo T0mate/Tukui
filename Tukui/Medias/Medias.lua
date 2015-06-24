@@ -1,14 +1,17 @@
 local T, C = unpack(select(2, ...))
 
+local Locale = GetLocale()
+
 C["Medias"] = {
-	-- Fonts (ENGLISH)
+
+	-- Fonts
 	["Font"] = [=[Interface\Addons\Tukui\Medias\Fonts\FRIZQT__.ttf]=],
-	["AltFont"] = [[Interface\AddOns\Tukui\Medias\Fonts\FRIZQT__.ttf]],
+	["UnitFrameFont"] = [[Interface\AddOns\Tukui\Medias\Fonts\FRIZQT__.ttf]],
 	["DamageFont"] = [[Interface\AddOns\Tukui\Medias\Fonts\FRIZQT__.ttf]],
-	["PixelFont"] = [=[Interface\Addons\Tukui\Medias\Fonts\pixel_font.ttf]=],
+	["PixelFont"] = [=[Interface\Addons\Tukui\Medias\Fonts\FRIZQT__.ttf]=],
 	["ActionBarFont"] = [=[Interface\Addons\Tukui\Medias\Fonts\FRIZQT__.ttf]=],
 	["FRIZQT"] = [=[Interface\Addons\Tukui\Medias\Fonts\FRIZQT__.ttf]=],
-	
+
 	-- Textures
 	["Normal"] = [[Interface\AddOns\Tukui\Medias\Textures\normTex]],
 	["Glow"] = [[Interface\AddOns\Tukui\Medias\Textures\glowTex]],
@@ -26,3 +29,15 @@ C["Medias"] = {
 	["Whisper"] = [[Interface\AddOns\Tukui\Medias\Sounds\whisper.mp3]],
 	["Warning"] = [[Interface\AddOns\Tukui\Medias\Sounds\warning.mp3]],
 }
+
+if (Locale == "esES" or Locale == "esMX" or Locale == "itIT" or Locale == "ptBR" or Locale == "ruRU") then
+	C["Medias"].UnitFrameFont = C["Medias"].Font
+end
+
+if (Locale == "koKR" or Locale == "zhTW" or Locale == "zhCN") then
+	C["Medias"].Font = STANDARD_TEXT_FONT
+	C["Medias"].UnitFrameFont = UNIT_NAME_FONT
+	C["Medias"].DamageFont = DAMAGE_TEXT_FONT
+elseif Locale == "ruRU" then
+	C["Medias"].DamageFont = [[Interface\AddOns\Tukui\Medias\Fonts\combat_font_rus.ttf]]
+end

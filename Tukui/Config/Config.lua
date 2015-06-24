@@ -14,6 +14,7 @@ C["General"] = {
 
 C["ActionBars"] = {
 	["Enable"] = true,
+	["EquipBorder"] = true,
 	["HotKey"] = false,
 	["Macro"] = false,
 	["ShapeShift"] = false,
@@ -151,7 +152,7 @@ C["Tooltips"] = {
 	["ShowSpec"] = true,
 	["MouseOver"] = false,
 	["HealthFont"] = "FRIZQT",
-	["HealthTexture"] = "FRIZQT",
+	["HealthTexture"] = "Tukui"
 }
 
 C["UnitFrames"] = {
@@ -178,6 +179,7 @@ C["UnitFrames"] = {
 	["OnlySelfDebuffs"] = false,
 	["Threat"] = true,
 	["BossAltPowerText"] = true,
+	["OnlySelfBuffs"] = false,
 	["DarkTheme"] = false,
 	["Arena"] = true,
 	["Boss"] = true,

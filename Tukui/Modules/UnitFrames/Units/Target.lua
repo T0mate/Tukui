@@ -79,10 +79,6 @@ function TukuiUnitFrames:Target()
 	
 	Power.frequentUpdates = true
 	
-	--[[Power.colorPower = true
-	Power.frequentUpdates = true
-	Power.colorDisconnected = true]]
-	
 	if DarkTheme then
 		Power.colorTapping = true
 		Power.colorClass = true
@@ -98,6 +94,32 @@ function TukuiUnitFrames:Target()
 	end
 
 	Power.PostUpdate = TukuiUnitFrames.PostUpdatePower
+	
+	local AltPowerBar = CreateFrame("StatusBar", nil, self)
+	AltPowerBar:Height(8)
+	AltPowerBar:SetStatusBarTexture(PowerTexture)
+	AltPowerBar:GetStatusBarTexture():SetHorizTile(false)
+	AltPowerBar:SetStatusBarColor(0, 0, 0)
+	AltPowerBar:SetPoint("LEFT")
+	AltPowerBar:SetPoint("RIGHT")
+	AltPowerBar:SetPoint("BOTTOM", Health, "BOTTOM", 0, 0)
+	AltPowerBar:SetBackdrop({
+		bgFile = C.Medias.Blank, 
+		edgeFile = C.Medias.Blank, 
+		tile = false, tileSize = 0, edgeSize = T.Scale(1), 
+		insets = { left = 0, right = 0, top = T.Scale(-1), bottom = 0}
+	})
+	AltPowerBar:SetBackdropColor(0, 0, 0)
+	AltPowerBar:SetBackdropBorderColor(0, 0, 0)
+	AltPowerBar:SetFrameLevel(Health:GetFrameLevel() + 1)
+	
+	if C.UnitFrames.AltPowerText then
+		AltPowerBar.Value = AltPowerBar:CreateFontString(nil, "OVERLAY")
+		AltPowerBar.Value:SetFontObject(Font)
+		AltPowerBar.Value:Point("CENTER", 0, 0)
+	end
+	
+	AltPowerBar.PostUpdate = TukuiUnitFrames.UpdateAltPower
 	
 	if C.UnitFrames.Portrait then
 		local Portrait = CreateFrame("PlayerModel", nil, Health)
@@ -128,7 +150,7 @@ function TukuiUnitFrames:Target()
 		FirstBar:SetPoint("TOPLEFT", Health:GetStatusBarTexture(), "TOPRIGHT", 0, 0)
 		FirstBar:SetPoint("BOTTOMLEFT", Health:GetStatusBarTexture(), "BOTTOMRIGHT", 0, 0)
 		FirstBar:SetWidth(250)
-		FirstBar:SetStatusBarTexture(C.Medias.Normal)
+		FirstBar:SetStatusBarTexture(HealthTexture)
 		FirstBar:SetStatusBarColor(0, 0.3, 0.15, 1)
 		FirstBar:SetMinMaxValues(0,1)
 		
@@ -136,17 +158,17 @@ function TukuiUnitFrames:Target()
 		SecondBar:SetPoint("TOPLEFT", Health:GetStatusBarTexture(), "TOPRIGHT", 0, 0)
 		SecondBar:SetPoint("BOTTOMLEFT", Health:GetStatusBarTexture(), "BOTTOMRIGHT", 0, 0)
 		SecondBar:SetWidth(250)
-		SecondBar:SetStatusBarTexture(C.Medias.Normal)
+		SecondBar:SetStatusBarTexture(HealthTexture)
 		SecondBar:SetStatusBarColor(0, 0.3, 0, 1)
 		
 		local ThirdBar = CreateFrame("StatusBar", nil, Health)
 		ThirdBar:SetPoint("TOPLEFT", Health:GetStatusBarTexture(), "TOPRIGHT", 0, 0)
 		ThirdBar:SetPoint("BOTTOMLEFT", Health:GetStatusBarTexture(), "BOTTOMRIGHT", 0, 0)
 		ThirdBar:SetWidth(250)
-		ThirdBar:SetStatusBarTexture(C.Medias.Normal)
+		ThirdBar:SetStatusBarTexture(HealthTexture)
 		ThirdBar:SetStatusBarColor(0.3, 0.3, 0, 1)
 		
-		ThirdBar:SetFrameLevel(Health:GetFrameLevel() - 2)
+		ThirdBar:SetFrameLevel(Health:GetFrameLevel())
 		SecondBar:SetFrameLevel(ThirdBar:GetFrameLevel() + 1)
 		FirstBar:SetFrameLevel(ThirdBar:GetFrameLevel() + 2)
 		
@@ -160,7 +182,7 @@ function TukuiUnitFrames:Target()
 	
 	if (C.UnitFrames.CastBar) then
 		local CastBar = CreateFrame("StatusBar", "TukuiTargetCastBar", self)
-		CastBar:SetStatusBarTexture(C.Medias.Normal)
+		CastBar:SetStatusBarTexture(CastTexture)
 		CastBar:SetFrameLevel(6)
 		CastBar:SetInside(Panel)
 
@@ -196,7 +218,7 @@ function TukuiUnitFrames:Target()
 
 		if (C.UnitFrames.CastBarLatency) then
 			CastBar.SafeZone = CastBar:CreateTexture(nil, "ARTWORK")
-			CastBar.SafeZone:SetTexture(C.Medias.Normal)
+			CastBar.SafeZone:SetTexture(CastTexture)
 			CastBar.SafeZone:SetVertexColor(0.69, 0.31, 0.31, 0.75)
 		end
 
@@ -238,8 +260,8 @@ function TukuiUnitFrames:Target()
 	-- Also the icons in PostCreateAura are not working.
 	--------------------------
 	if (C.UnitFrames.TargetAuras) then
-		local Buffs = CreateFrame("Frame", nil, self)
-		local Debuffs = CreateFrame("Frame", nil, self)
+		local Buffs = CreateFrame("Frame", self:GetName()..'Buffs', self)
+		local Debuffs = CreateFrame("Frame", self:GetName()..'Debuffs', self)
 
 		Buffs:Point("BOTTOMLEFT", self, "TOPLEFT", 0, 4)
 
@@ -261,6 +283,7 @@ function TukuiUnitFrames:Target()
 		Buffs.PostCreateIcon = TukuiUnitFrames.PostCreateAura
 		Buffs.PostUpdateIcon = TukuiUnitFrames.PostUpdateAura
 		Buffs.PostUpdate = TukuiUnitFrames.UpdateDebuffsHeaderPosition
+		Buffs.onlyShowPlayer = C.UnitFrames.OnlySelfBuffs
 
 		Debuffs.spacing = 2
 		Debuffs.initialAnchor = "TOPRIGHT"
@@ -300,7 +323,7 @@ function TukuiUnitFrames:Target()
 	end
 	
 	if (C.UnitFrames.ComboBar) then
-		local ComboPoints = CreateFrame("Frame", nil, self)
+		local ComboPoints = CreateFrame("Frame", self:GetName()..'ComboPointsBar', self)
 		ComboPoints:Point("BOTTOMLEFT", self, "TOPLEFT", 0, 1)
 		ComboPoints:Width(250)
 		ComboPoints:Height(8)
@@ -311,7 +334,7 @@ function TukuiUnitFrames:Target()
 		for i = 1, 5 do
 			ComboPoints[i] = CreateFrame("StatusBar", nil, ComboPoints)
 			ComboPoints[i]:Height(8)
-			ComboPoints[i]:SetStatusBarTexture(C.Medias.Normal)
+			ComboPoints[i]:SetStatusBarTexture(PowerTexture)
 		
 			if i == 1 then
 				ComboPoints[i]:Point("LEFT", ComboPoints, "LEFT", 0, 0)
@@ -346,7 +369,7 @@ function TukuiUnitFrames:Target()
 		-- Weakened Soul Bar
 		local WSBar = CreateFrame("StatusBar", nil, Power)
 		WSBar:SetAllPoints(Power)
-		WSBar:SetStatusBarTexture(C.Medias.Normal)
+		WSBar:SetStatusBarTexture(PowerTexture)
 		WSBar:GetStatusBarTexture():SetHorizTile(false)
 		WSBar:SetBackdrop(TukuiUnitFrames.Backdrop)
 		WSBar:SetBackdropColor(unpack(C["General"].BackdropColor))
@@ -363,6 +386,7 @@ function TukuiUnitFrames:Target()
 	self.Health.bg = Health.Background
 	self.Power = Power
 	self.Power.bg = Power.Background
+	self.AltPowerBar = AltPowerBar
 	self.RaidIcon = RaidIcon
 	self.Threat = Threat
 end

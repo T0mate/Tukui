@@ -26,11 +26,16 @@ GameMenu.Buttons = {
 }
 
 function GameMenu:AddHooks()
-	local Addons = GameMenuButtonAddons
+	local Logout = GameMenuButtonLogout
 
-	Menu:HookScript("OnShow", function(self)
-		self:SetHeight(self:GetHeight() + Addons:GetHeight() - 4)
-	end)
+	Menu:SetHeight(Menu:GetHeight() + Logout:GetHeight() - 4)
+	local _, relTo, _, _, offY = Logout:GetPoint()
+	if relTo ~= GameMenu.Tukui then
+		GameMenu.Tukui:ClearAllPoints()
+		GameMenu.Tukui:Point("TOPLEFT", relTo, "BOTTOMLEFT", 0, -1)
+		Logout:ClearAllPoints()
+		Logout:Point("TOPLEFT", GameMenu.Tukui, "BOTTOMLEFT", 0, offY)
+	end
 end
 
 function GameMenu:EnableTukuiConfig()
@@ -55,10 +60,7 @@ function GameMenu:EnableTukuiConfig()
 		HideUIPanel(Menu)
 	end)
 	
-	Logout:ClearAllPoints()
-	Logout:Point("TOPLEFT", Tukui, "BOTTOMLEFT", 0, -1)
-	
-	self:AddHooks()
+	hooksecurefunc('GameMenuFrame_UpdateVisibleButtons', self.AddHooks)
 	self.Tukui = Tukui
 end
 
