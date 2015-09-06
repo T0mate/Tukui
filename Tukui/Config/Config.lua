@@ -102,6 +102,7 @@ C["NamePlates"] = {
 	["NonTargetAlpha"] = .5,
 	["Texture"] = "Tukui",
 	["Font"] = "FRIZQT",
+	["NameTextColor"] = true,
 }
 
 C["Party"] = {
