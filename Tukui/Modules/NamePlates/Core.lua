@@ -86,7 +86,7 @@ function Plates:OnShow()
 		-- return -- TODO: watch this carefully
 	else
 		frameUpdateList = {}
-		self.Bar:SetSize(self.NewPlate:GetWidth(), Plates.PlateHeight*2)
+		--self.Bar:SetSize(self.NewPlate:GetWidth(), Plates.PlateHeight*2)
 	end
 	
 	if not self:IsShown() then
